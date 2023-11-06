@@ -383,8 +383,8 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
     fig.add_trace(go.Scatter(x=df['time'], y=df['vwap'], mode='lines', name='VWAP'))
     
     #if 2 in lstVwap:
-    fig.add_trace(go.Scatter(x=df['time'], y=df['STDEV_2'], mode='lines', name='UPPERVWAP'))
-    fig.add_trace(go.Scatter(x=df['time'], y=df['STDEV_N2'], mode='lines', name='LOWERVWAP'))
+    #fig.add_trace(go.Scatter(x=df['time'], y=df['STDEV_2'], mode='lines', name='UPPERVWAP'))
+    #fig.add_trace(go.Scatter(x=df['time'], y=df['STDEV_N2'], mode='lines', name='LOWERVWAP'))
     #if 0 in lstVwap:
     fig.add_trace(go.Scatter(x=df['time'], y=df['STDEV_25'], mode='lines', name='UPPERVWAP1'))
     fig.add_trace(go.Scatter(x=df['time'], y=df['STDEV_N25'], mode='lines', name='LOWERVWAP1'))
