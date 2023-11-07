@@ -20,6 +20,8 @@ import requests
 import urllib3
 from google.cloud.storage import Blob
 from google.cloud import storage
+from google.auth.exceptions import DefaultCredentialsError
+
 
 year = str(date.today().year)
 month = date.today().month
@@ -132,6 +134,6 @@ while True:
         blob.upload_from_string(json.dumps(total))
             
         #time.sleep(5)
-    except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError):
+    except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError, DefaultCredentialsError):
         continue
         
