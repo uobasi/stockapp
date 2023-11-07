@@ -18,6 +18,7 @@ import json
 from polygon import exceptions
 from google.cloud.storage import Blob
 from google.cloud import storage
+from google.auth.exceptions import DefaultCredentialsError
 import requests
 
 year = str(date.today().year)
@@ -83,5 +84,5 @@ while True:
         blob.upload_from_string(json.dumps(final))
             
         
-    except(exceptions.BadResponse, requests.exceptions.ReadTimeout):
+    except(exceptions.BadResponse, requests.exceptions.ReadTimeout, DefaultCredentialsError):
         continue
