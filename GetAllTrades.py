@@ -18,6 +18,7 @@ import json
 from polygon import exceptions
 from google.cloud.storage import Blob
 from google.cloud import storage
+import requests
 
 year = str(date.today().year)
 month = date.today().month
@@ -82,5 +83,5 @@ while True:
         blob.upload_from_string(json.dumps(final))
             
         
-    except(exceptions.BadResponse):
+    except(exceptions.BadResponse, requests.exceptions.ReadTimeout):
         continue
