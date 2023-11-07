@@ -237,11 +237,10 @@ while True:
         OptionOrdersCall = json.loads(blob.download_as_text())
         
         optionOrderList = OptionOrdersPut + OptionOrdersCall
-        optionOrderList.sort(key=lambda x:int(x[2])) 
+        
               
         if len(optionOrderList) > 0:
-        
-            
+            optionOrderList.sort(key=lambda x:int(x[2])) 
             oppDict = {}
             for i in times:
                 oppDict[i] = [0,0]#[1,1,1,1,1,1,]#
