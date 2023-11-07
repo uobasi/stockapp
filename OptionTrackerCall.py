@@ -16,6 +16,8 @@ import time
 import bisect
 from polygon import exceptions
 import json
+import requests
+import urllib3
 from google.cloud.storage import Blob
 from google.cloud import storage
 
@@ -130,6 +132,6 @@ while True:
         blob.upload_from_string(json.dumps(total))
             
         #time.sleep(5)
-    except(exceptions.BadResponse):
+    except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError):
         continue
         
