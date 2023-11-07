@@ -84,5 +84,5 @@ while True:
         blob.upload_from_string(json.dumps(final))
             
         
-    except(exceptions.BadResponse, requests.exceptions.ReadTimeout, DefaultCredentialsError):
+    except(exceptions.BadResponse, requests.exceptions.ReadTimeout, DefaultCredentialsError, requests.exceptions.ConnectionError):
         continue
