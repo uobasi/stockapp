@@ -18,6 +18,7 @@ from polygon import exceptions
 import json
 from google.cloud.storage import Blob
 from google.cloud import storage
+from google.auth.exceptions import DefaultCredentialsError
 
 year = str(date.today().year)
 month = date.today().month
@@ -128,7 +129,7 @@ while True:
             
         #time.sleep(5)
             
-    except(exceptions.BadResponse):
+    except(exceptions.BadResponse, DefaultCredentialsError):
         continue
     
     
