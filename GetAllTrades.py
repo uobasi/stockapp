@@ -20,6 +20,7 @@ from google.cloud.storage import Blob
 from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
 import requests
+from google.api_core.exceptions import TooManyRequests
 
 year = str(date.today().year)
 month = date.today().month
@@ -84,5 +85,5 @@ while True:
         blob.upload_from_string(json.dumps(final))
             
         
-    except(exceptions.BadResponse, requests.exceptions.ReadTimeout, DefaultCredentialsError, requests.exceptions.ConnectionError):
+    except(exceptions.BadResponse, requests.exceptions.ReadTimeout, DefaultCredentialsError, requests.exceptions.ConnectionError, TooManyRequests):
         continue
