@@ -666,6 +666,8 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
     
     
     fig.update_xaxes(showticklabels=False, row=1, col=1)
+    fig.update_xaxes(showticklabels=False, row=2, col=1)
+    fig.update_xaxes(showticklabels=False, row=2, col=2)
     #fig.update_xaxes(showticklabels=False, row=1, col=2)
     #fig.show(config={'modeBarButtonsToAdd': ['drawline']})
     return fig
