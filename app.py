@@ -1537,7 +1537,7 @@ def update_graph_live(n_intervals):
     except(FileNotFoundError):
         pass#continue
     
-    fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[])
+    fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[],trends=FindTrends(df,n=4))
     #fg.show(config={'modeBarButtonsToAdd': ['drawline']})
     
     return fg
