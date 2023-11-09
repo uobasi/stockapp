@@ -578,7 +578,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
         row=1, col=1)
         trcount+=1
     
-    for ttt in trends:
+    for ttt in trends[0]:
         fig.add_shape(ttt, row=1, col=1)
     
 
@@ -1233,21 +1233,22 @@ def FindTrends(df, n:int=12, distance_factor:float=0.1, typ:bool=True):
             
             
     lines =[]
-    lineEqs = []
+    #lineEqs = []
+    Dlist = []
     
     for trend in trends:
         if trend['validations'] > 2:
             
             
-            m = (trend['p2'][1] - trend['p1'][1]) / (mSeconds(trend['p2'][0],typ) - mSeconds(trend['p1'][0],typ))
-            b = trend['p2'][1] - m * mSeconds(trend['p2'][0],typ)
-            lineEqs.append((m,b))
+            #m = (trend['p2'][1] - trend['p1'][1]) / (mSeconds(trend['p2'][0],typ) - mSeconds(trend['p1'][0],typ))
+            #b = trend['p2'][1] - m * mSeconds(trend['p2'][0],typ)
+            #lineEqs.append((m,b))
             
             #tMax = mSeconds(df['time'].max(),typ)
             
             line2 = go.layout.Shape(
                 type = 'line',
-                x0= trend['p1'][0], y0=trend['p1'][1],
+                x0=trend['p1'][0], y0=trend['p1'][1],
                 x1=trend["p2"][0], y1=trend["p2"][1],
                 #x1=df['time'].max(), y1= m * tMax + b,
                 line = dict(
@@ -1256,9 +1257,11 @@ def FindTrends(df, n:int=12, distance_factor:float=0.1, typ:bool=True):
                     dash='dot'
                     ))
             lines.append(line2)
+            Dlist.append([trend['p1']]+[(trn['x'], trn['y'])for trn in trend['points']]+[trend['p2']])
+            #print(trend)
             #print(trend['p1'][0],trend['p1'][1], tMax, m * tMax + b )
     
-    return lines     
+    return [lines,Dlist]
 
 
 
