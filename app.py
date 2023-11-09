@@ -578,8 +578,8 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
         row=1, col=1)
         trcount+=1
     
-    for ttt in trends[0]:
-        fig.add_shape(ttt, row=1, col=1)
+    #for ttt in trends[0]:
+        #fig.add_shape(ttt, row=1, col=1)
     
 
     #fig.add_trace(go.Scatter(x=df['time'], y=df['2ema'], mode='lines', name='2ema'))
@@ -1540,7 +1540,7 @@ def update_graph_live(n_intervals):
     except(FileNotFoundError):
         pass#continue
     
-    fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[],trends=FindTrends(df,n=10))
+    fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[]) #trends=FindTrends(df,n=10)
     #fg.show(config={'modeBarButtonsToAdd': ['drawline']})
     
     return fg
