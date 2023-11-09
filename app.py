@@ -578,8 +578,8 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
         row=1, col=1)
         trcount+=1
     
-    #for ttt in trends:
-        #fig.add_shape(ttt, row=1, col=1)
+    for ttt in trends:
+        fig.add_shape(ttt, row=1, col=1)
     
 
     #fig.add_trace(go.Scatter(x=df['time'], y=df['2ema'], mode='lines', name='2ema'))
@@ -844,6 +844,396 @@ def splitHun(stkName, trad, quot, num1, num2, quodict):
     #print([Bidd,Askk,Between])    
     return [Bidd,belowBid,Askk,aboveAsk,Between]
     
+from numpy import linalg as la
+def FindTrends(df, n:int=12, distance_factor:float=0.1, typ:bool=True):
+    trends = []
+
+    df['min'] = df.iloc[argrelextrema(df.close.values, np.less_equal, order=n)[0]]['close']
+    df['max'] = df.iloc[argrelextrema(df.close.values, np.greater_equal, order=n)[0]]['close']
+    
+    dfMax = df[df['max'].notnull()]
+    dfMin = df[df['min'].notnull()]
+    
+ 
+    prevIndex = -1
+    currentIndex = 0
+    dropRows = []
+    
+    for il, pl in dfMax.iterrows():
+        currentIndex = il
+        if currentIndex <= prevIndex + n * 0.45:
+            dropRows.append(currentIndex)
+        prevIndex = il
+        
+    dfMax = dfMax.drop(dropRows)
+    
+    for ind in dropRows:
+        df.iloc[ind, :]['max'] = np.nan
+        
+    prevIndex = -1
+    currentIndex = 0
+    dropRows = []
+    
+    for il, pl in dfMin.iterrows():
+        currentIndex = il
+        if currentIndex <= prevIndex + n * 0.45:
+            dropRows.append(currentIndex)
+        prevIndex = il
+        
+    dfMin = dfMin.drop(dropRows)
+    
+    for ind in dropRows:
+        df.iloc[ind, :]['min'] = np.nan
+        
+    for i1, p1 in dfMax.iterrows():
+        for  i2, p2 in dfMax.iterrows():
+            if i1 + 1 < i2:
+                if p1['max'] <= p2['max']:
+                    trendPoints = []
+                    
+                    f = get10Factor(p1['max'])
+                    p1max = p1['max']*10**f
+                    p2max = p2['max']*10**f
+                    
+                    ms = mSeconds(p1['time'], typ)
+                    tf = get10Factor(ms)
+                    p1time = ms*10**tf
+                    p2time = ms*10**tf
+                    
+                    point1 = np.asarray((p1time, p1max))
+                    point2 = np.asarray((p2time, p2max))
+                    
+                    line_length = np.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2)
+                    
+                    
+                    for i3 in range(i1 + 1, i2):
+                        if not pd.isna(df.iloc[i3, :]['max']):
+                            p3 = df.iloc[i3, :]
+                            
+                            if p3['max'] > p2['max']:
+                                trendPoints = []
+                                break
+                            
+                            
+                            p3max = p3['max']*10**f
+                            p3time = mSeconds(p3['time'], typ)*10**tf
+                            
+                            point3 = np.asarray((p3time, p3max))
+                            
+                            d = la.norm(np.cross(point2-point1, point1-point3))/la.norm(point2-point1)
+                            
+                            v1 = (point2[0] - point1[0], point2[1] - point1[1])
+                            v2 = (point3[0] - point1[0], point3[1] - point1[1])
+                            xp = v1[0]*v2[1] - v1[1]*v2[0]
+                            
+                            '''
+                            
+                            if xp > 0.0003 * distance_factor:
+                                trendPoints = []
+                                break
+                            
+                            if d < 0.006 * distance_factor:
+                            '''
+                            trendPoints.append({
+                                'x' : p3['time'],
+                                'y' : p3['max'],
+                                'x_norm' : p3time,
+                                'y_norm' : p3max,
+                                'dist' : d,
+                                'xp' : xp})
+                                
+                    if len(trendPoints) > 0: 
+                        trends.append({
+                            'direction' : 'up',
+                            'position' : 'above',
+                            'validations' : len(trendPoints),
+                            'length' : line_length,
+                            'i1' : i1,
+                            'i2' : i2,
+                            'p1' : (p1['time'], p1['max']),
+                            'p2' : (p2['time'], p2['max']),
+                            'color' : 'Green',
+                            'points' : trendPoints,
+                            'p1_norm' : (p1time, p1max),
+                            'p2_norm' : (p2time, p2max)
+                            })
+                        
+                            
+                else:
+                    trendPoints = []
+                    
+                    f = get10Factor(p1['max'])
+                    p1max = p1['max']*10**f
+                    p2max = p2['max']*10**f
+                    
+                    ms = mSeconds(p1['time'],typ)
+                    tf = get10Factor(ms)
+                    p1time = ms*10**tf
+                    p2time = ms*10**tf
+                    
+                    point1 = np.asarray((p1time, p1max))
+                    point2 = np.asarray((p2time, p2max))
+                    
+                    line_length = np.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2)
+                    
+                    for i3 in range(i1 + 1, i2):
+                        if not pd.isna(df.iloc[i3, :]['max']):
+                            p3 = df.iloc[i3, :]
+                            
+                            if p3['max'] > p1['max']:
+                                trendPoints = []
+                                break
+                            
+                            p3max = p3['max']*10**f
+                            p3time = mSeconds(p3['time'],typ)*10**tf
+                            
+                            point3 = np.asarray((p3time, p3max))
+                            
+                            d = la.norm(np.cross(point2-point1, point1-point3))/la.norm(point2-point1)
+                            
+                            v1 = (point2[0] - point1[0], point2[1] - point1[1])
+                            v2 = (point3[0] - point1[0], point3[1] - point1[1])
+                            xp = v1[0]*v2[1] - v1[1]*v2[0]
+                            
+                            '''
+                            if xp > 0.0003 * distance_factor:
+                                trendPoints = []
+                                break
+                                
+                            if d < 0.0006 * distance_factor:
+                            '''
+                            trendPoints.append({
+                                'x': p3['time'],
+                                'y': p3['max'],
+                                'x_norm' : p3time,
+                                'y_norm' : p3max,
+                                'dist' : d,
+                                'xp' : xp})
+                                
+                    
+                    if len(trendPoints) > 0: 
+                        trends.append({
+                            'direction' : 'down',
+                            'position' : 'above',
+                            'validations' : len(trendPoints),
+                            'length' : line_length,
+                            'i1' : i1,
+                            'i2' : i2,
+                            'p1' : (p1['time'], p1['max']),
+                            'p2' : (p2['time'], p2['max']),
+                            'color' : 'Red',
+                            'points' : trendPoints,
+                            'p1_norm' : (p1time, p1max),
+                            'p2_norm' : (p2time, p2max)
+                            })
+                    
+        #print(p1max,p2max)
+    for i1, p1, in dfMin.iterrows():
+        for i2, p2 in dfMin.iterrows():
+            if i1 + 1 <= i2:
+                if p1['min'] < p2['min']:
+                    trendPoints = []
+                    
+                    f = get10Factor(p1['min'])
+                    p1min = p1['min']*10**f
+                    p2min = p2['min']*10**f
+                    
+                    ms = mSeconds(p1['time'],typ)
+                    tf = get10Factor(ms)
+                    p1time = ms*10**tf
+                    p2time = ms*10**tf
+                    
+                    point1 = np.asarray((p1time, p1min))
+                    point2 = np.asarray((p2time, p2min))
+                    
+                    line_length = np.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2)
+                    
+                    for i3 in range(i1 + 1, i2):
+                        if not pd.isna(df.iloc[i3, :]['min']):
+                            p3 = df.iloc[i3, :]
+                            if p3['min'] < p1['min']:
+                                trendPoints = []
+                                break
+                            
+                            p3min = p3['min']*10**f
+                            p3time = mSeconds(p3['time'],typ)*10**tf
+                            point3 = np.asarray((p3time, p3min))
+                            d = la.norm(np.cross(point2-point1, point1-point3))/la.norm(point2-point1)
+                            
+                            v1 = (point2[0] - point1[0], point2[1] - point1[1])
+                            v2 = (point3[0] - point1[0], point3[1] - point1[1])
+                            xp = v1[0]*v2[1] - v1[1]*v2[0] 
+                            
+                            '''
+                            if xp < -0.0003 * distance_factor:
+                                trendPoints = []
+                                break
+                            
+                            if d < 0.0006 * distance_factor:
+                            '''
+                            trendPoints.append({
+                                'x' : p3['time'],
+                                'y' : p3['min'],
+                                'x_norm' : p3time,
+                                'y_norm' : p3min,
+                                'dist' : d,
+                                'xp' : xp})
+                                
+                    if len(trendPoints) > 0: 
+                        trends.append({
+                            'direction' : 'up',
+                            'position' : 'below',
+                            'validations' : len(trendPoints),
+                            'length' : line_length,
+                            'i1' : i1,
+                            'i2' : i2,
+                            'p1' : (p1['time'], p1['min']),
+                            'p2' : (p2['time'], p2['min']),
+                            'color' : 'Green',
+                            'points' : trendPoints,
+                            'p1_norm' : (p1time, p1min),
+                            'p2_norm' : (p2time, p2min)
+                            })    
+                        
+                        
+                
+                else:
+                    trendPoints = []
+                    
+                    f = get10Factor(p1['min'])
+                    p1min = p1['min']*10**f
+                    p2min = p2['min']*10**f
+                    
+                    ms = mSeconds(p1['time'],typ)
+                    tf = get10Factor(ms)
+                    p1time = ms*10**tf
+                    p2time = ms*10**tf
+                    
+                    point1 = np.asarray((p1time, p1min))
+                    point2 = np.asarray((p2time, p2min))
+                    
+                    line_length = np.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2)
+                    
+                    for i3 in range(i1 + 1, i2):
+                        if not pd.isna(df.iloc[i3, :]['min']):
+                            p3 = df.iloc[i3, :]
+                            
+                            if p3['min'] < p2['min']:
+                                trendPoints = []
+                                break
+                            
+                            p3min = p3['min']*10**f
+                            p3time = mSeconds(p3['time'],typ)*10**tf
+                            point3 = np.asarray((p3time, p3min))
+                            
+                            d = la.norm(np.cross(point2-point1, point1-point3))/la.norm(point2-point1)
+                            
+                            v1 = (point2[0] - point1[0], point2[1] - point1[1])
+                            v2 = (point3[0] - point1[0], point3[1] - point1[1])
+                            xp = v1[0]*v2[1] - v1[1]*v2[0]
+                            
+                            '''
+                            if xp < -0.0003 * distance_factor:
+                                trendPoints = []
+                                break
+                                
+                            if d < 0.0006 * distance_factor:
+                            '''
+                            trendPoints.append({
+                                'x': p3['time'],
+                                'y': p3['min'],
+                                'x_norm' : p3time,
+                                'y_norm' : p3min,
+                                'dist' : d,
+                                'xp' : xp})
+                                
+                    
+                    if len(trendPoints) > 0: 
+                        trends.append({
+                            'direction' : 'down',
+                            'position' : 'below',
+                            'validations' : len(trendPoints),
+                            'length' : line_length,
+                            'i1' : i1,
+                            'i2' : i2,
+                            'p1' : (p1['time'], p1['min']),
+                            'p2' : (p2['time'], p2['min']),
+                            'color' : 'Red',
+                            'points' : trendPoints,
+                            'p1_norm' : (p1time, p1min),
+                            'p2_norm' : (p2time, p2min)
+                            })
+                
+                     
+    removeTrends = []
+    priceRange = df['max'].max() / df['min'].min()
+    
+    for trend1 in trends:
+        if trend1 in removeTrends:
+            continue
+        for trend2 in trends:
+            if trend2 in removeTrends:
+                continue
+            
+            if trend1['i1'] == trend2['i1'] and trend1['i2'] != trend2['i2']:
+                v1 = (trend1['p2_norm'][0] - trend1['p1_norm'][0], trend1['p2_norm'][1] - trend1['p1_norm'][1])
+                v2 = (trend2['p2_norm'][0] - trend1['p1_norm'][0], trend2['p2_norm'][1] - trend1['p1_norm'][1])
+                xp = v1[0]*v2[1] - v1[1]*v2[0]
+                
+                if xp < 0.0004 * priceRange and xp > -0.0004 * priceRange:
+                    if trend1['length'] > trend2['length']:
+                        removeTrends.append(trend2)
+                        trend1['validations'] = trend1['validations'] + 1
+                    else:
+                        removeTrends.append(trend1)
+                        trend2['validations'] = trend2['validations'] + 1
+                        
+            elif trend1['i2'] == trend2['i2'] and trend1['i1'] != trend2['i1']:
+                v1 = (trend1['p1_norm'][0] - trend1['p2_norm'][0], trend1['p1_norm'][1] - trend1['p2_norm'][1])
+                v2 = (trend2['p1_norm'][0] - trend1['p2_norm'][0], trend2['p1_norm'][1] - trend1['p2_norm'][1])
+                xp = v1[0]*v2[1] - v1[1]*v2[0]
+                
+                if xp < 0.0004 * priceRange and xp > -0.0004 * priceRange:
+                    if trend1['length'] > trend2['length']:
+                        removeTrends.append(trend2)
+                        trend1['validations'] = trend1['validations']+1
+                    else:
+                        removeTrends.append(trend1)
+                        trend2['validations'] = trend2['validations'] + 1
+                
+    for trend in removeTrends:
+        if trend in trends:
+            trends.remove(trend) 
+            
+            
+    lines =[]
+    lineEqs = []
+    
+    for trend in trends:
+        if trend['validations'] > 2:
+            
+            
+            m = (trend['p2'][1] - trend['p1'][1]) / (mSeconds(trend['p2'][0],typ) - mSeconds(trend['p1'][0],typ))
+            b = trend['p2'][1] - m * mSeconds(trend['p2'][0],typ)
+            lineEqs.append((m,b))
+            
+            #tMax = mSeconds(df['time'].max(),typ)
+            
+            line2 = go.layout.Shape(
+                type = 'line',
+                x0= trend['p1'][0], y0=trend['p1'][1],
+                x1=trend["p2"][0], y1=trend["p2"][1],
+                #x1=df['time'].max(), y1= m * tMax + b,
+                line = dict(
+                    color=trend['color'],
+                    width=max(1, trend['validations']/100),
+                    dash='dot'
+                    ))
+            lines.append(line2)
+            #print(trend['p1'][0],trend['p1'][1], tMax, m * tMax + b )
+    
+    return lines     
+
 
 
 from dash import Dash, dcc, html, Input, Output, callback
