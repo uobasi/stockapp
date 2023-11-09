@@ -843,7 +843,33 @@ def splitHun(stkName, trad, quot, num1, num2, quodict):
 
     #print([Bidd,Askk,Between])    
     return [Bidd,belowBid,Askk,aboveAsk,Between]
+
+
+def get10Factor(num):
+    p = 0
+    for i in range(-20,20):
+        if num == num % 10**i:
+            p = -(i-1)
+            break
+    return p
+
+
+def mSeconds(t, typ:bool=True):
+    if typ:
+        mon = str(datetime.now().month)+'/'
+        if len(mon) == 1:
+            mon = '0'+mon
+        day = str(datetime.now().day)+'/'
+        if len(day) == 1:
+            day = '0'+day
+        year = str(datetime.now().year)
+        
+        return datetime.strptime(mon+day+year+' '+t, '%m/%d/%Y %H:%M:%S').timestamp() * 1000
+    else:
     
+     return datetime.strptime(t, '%m-%d-%Y').timestamp() * 1000
+
+
 from numpy import linalg as la
 def FindTrends(df, n:int=12, distance_factor:float=0.1, typ:bool=True):
     trends = []
