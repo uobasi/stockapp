@@ -15,6 +15,7 @@ import csv
 import time
 import bisect
 import json
+import urllib3
 from polygon import exceptions
 from google.cloud.storage import Blob
 from google.cloud import storage
@@ -85,5 +86,5 @@ while True:
         blob.upload_from_string(json.dumps(final))
             
         
-    except(exceptions.BadResponse, requests.exceptions.ReadTimeout, DefaultCredentialsError, requests.exceptions.ConnectionError, TooManyRequests):
+    except(exceptions.BadResponse, requests.exceptions.ReadTimeout, DefaultCredentialsError, requests.exceptions.ConnectionError, TooManyRequests, urllib3.exceptions.MaxRetryError):
         continue
