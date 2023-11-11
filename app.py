@@ -1293,13 +1293,20 @@ def update_graph_live(n_intervals):
     OptionTimeFrame = []
     stkName = 'SPY'
     
-    year = str(date.today().year)
-    month = date.today().month
+    if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
+    lastFriday = date.today()
+    oneday = timedelta(days=1)
+
+    while lastFriday.weekday() != calendar.FRIDAY:
+        lastFriday -= oneday
+    
+    year = str(lastFriday.year)
+    month = lastFriday.month
     if month < 10:
         month = '0'+str(month)
     else:
         month = str(month)
-    day = date.today().day
+    day = lastFriday.day
     if day < 10:
         day = '0'+str(day)
     else:
