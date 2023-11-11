@@ -1311,6 +1311,18 @@ def update_graph_live(n_intervals):
         day = '0'+str(day)
     else:
         day = str(day)
+else:
+    year = str(date.today().year)
+    month = date.today().month
+    if month < 10:
+        month = '0'+str(month)
+    else:
+        month = str(month)
+    day = date.today().day
+    if day < 10:
+        day = '0'+str(day)
+    else:
+        day = str(day)
 
     #day = '31'
     #month = '08'
