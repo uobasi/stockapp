@@ -19,6 +19,7 @@ import json
 from google.cloud.storage import Blob
 from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
+import calendar
 
 if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
     lastFriday = date.today()
