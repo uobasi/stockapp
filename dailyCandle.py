@@ -19,19 +19,36 @@ from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
 
 
-year = str(date.today().year)
-month = date.today().month
-if month < 10:
-    month = '0'+str(month)
-else:
-    month = str(month)
-day = date.today().day
-if day < 10:
-    day = '0'+str(day)
-else:
-    day = str(day)
+if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
+    lastFriday = date.today()
+    oneday = timedelta(days=1)
 
-
+    while lastFriday.weekday() != calendar.FRIDAY:
+        lastFriday -= oneday
+    
+    year = str(lastFriday.year)
+    month = lastFriday.month
+    if month < 10:
+        month = '0'+str(month)
+    else:
+        month = str(month)
+    day = lastFriday.day
+    if day < 10:
+        day = '0'+str(day)
+    else:
+        day = str(day)
+else:
+    year = str(date.today().year)
+    month = date.today().month
+    if month < 10:
+        month = '0'+str(month)
+    else:
+        month = str(month)
+    day = date.today().day
+    if day < 10:
+        day = '0'+str(day)
+    else:
+        day = str(day)
 '''
 day = '10'
 month = '08'
