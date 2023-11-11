@@ -1294,35 +1294,35 @@ def update_graph_live(n_intervals):
     stkName = 'SPY'
     
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
-    lastFriday = date.today()
-    oneday = timedelta(days=1)
-
-    while lastFriday.weekday() != calendar.FRIDAY:
-        lastFriday -= oneday
+        lastFriday = date.today()
+        oneday = timedelta(days=1)
     
-    year = str(lastFriday.year)
-    month = lastFriday.month
-    if month < 10:
-        month = '0'+str(month)
+        while lastFriday.weekday() != calendar.FRIDAY:
+            lastFriday -= oneday
+        
+        year = str(lastFriday.year)
+        month = lastFriday.month
+        if month < 10:
+            month = '0'+str(month)
+        else:
+            month = str(month)
+        day = lastFriday.day
+        if day < 10:
+            day = '0'+str(day)
+        else:
+            day = str(day)
     else:
-        month = str(month)
-    day = lastFriday.day
-    if day < 10:
-        day = '0'+str(day)
-    else:
-        day = str(day)
-else:
-    year = str(date.today().year)
-    month = date.today().month
-    if month < 10:
-        month = '0'+str(month)
-    else:
-        month = str(month)
-    day = date.today().day
-    if day < 10:
-        day = '0'+str(day)
-    else:
-        day = str(day)
+        year = str(date.today().year)
+        month = date.today().month
+        if month < 10:
+            month = '0'+str(month)
+        else:
+            month = str(month)
+        day = date.today().day
+        if day < 10:
+            day = '0'+str(day)
+        else:
+            day = str(day)
 
     #day = '31'
     #month = '08'
