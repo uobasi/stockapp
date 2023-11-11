@@ -22,6 +22,7 @@ from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
 import requests
 from google.api_core.exceptions import TooManyRequests
+import calendar
 
 if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
     lastFriday = date.today()
