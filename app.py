@@ -1269,7 +1269,7 @@ def FindTrends(df, n:int=12, distance_factor:float=0.1, typ:bool=True):
 from dash import Dash, dcc, html, Input, Output, callback
 app = Dash()
 app.layout = html.Div([
-    dcc.Graph(id='graph'),
+    dcc.Graph(id='graph',config={'modeBarButtonsToAdd': ['drawline']}),
     dcc.Interval(
         id='interval',
         interval=62000,
