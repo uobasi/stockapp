@@ -19,6 +19,7 @@ import json
 from google.cloud.storage import Blob
 from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
+import urllib3
 import calendar
 
 if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
@@ -150,7 +151,7 @@ while True:
             
         #time.sleep(5)
             
-    except(exceptions.BadResponse, DefaultCredentialsError):
+    except(exceptions.BadResponse, DefaultCredentialsError, urllib3.exceptions.MaxRetryError):
         continue
     
     
