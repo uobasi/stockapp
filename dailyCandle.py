@@ -18,6 +18,8 @@ from google.cloud.storage import Blob
 from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
 import calendar
+from google.api_core.exceptions import TooManyRequests
+
 
 
 if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
@@ -266,7 +268,7 @@ while True:
                     bucket = gclient.get_bucket("stockapp-storage")
                     blob = Blob('dailyCandle'+stkName, bucket) 
                     blob.upload_from_string(json.dumps(newFFT[::-1]))
-    except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError, DefaultCredentialsError):
+    except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError, DefaultCredentialsError, TooManyRequests):
         continue
         
 
