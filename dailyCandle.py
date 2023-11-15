@@ -19,6 +19,7 @@ from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
 import calendar
 from google.api_core.exceptions import TooManyRequests
+from google.api_core.exceptions import RetryError
 
 
 
@@ -268,7 +269,7 @@ while True:
                     bucket = gclient.get_bucket("stockapp-storage")
                     blob = Blob('dailyCandle'+stkName, bucket) 
                     blob.upload_from_string(json.dumps(newFFT[::-1]))
-    except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError, DefaultCredentialsError, TooManyRequests):
+    except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError, DefaultCredentialsError, TooManyRequests, RetryError):
         continue
         
 
