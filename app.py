@@ -257,9 +257,9 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                 # color="#ffffff"
             ),)
     if len(localMax) > 0:
-        for b in localMax:
-            fig.add_annotation(x=df['time'][b], y=df['close'][localMin[p]],
-                               text='<b>' + str(p) + 'lMax' +  '</b>',
+        for b in range(len(localMax)):
+            fig.add_annotation(x=df['time'][b], y=df['close'][localMax[b]],
+                               text='<b>' + str(b) + 'lMax' +  '</b>',
                                showarrow=True,
                                arrowhead=4,
                                font=dict(
