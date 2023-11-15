@@ -246,9 +246,10 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
     localMax = argrelextrema(df.close.values, np.greater_equal, order=25)[0]
      
     if len(localMin) > 0:
-        for p in range(len(localMin)):
-            fig.add_annotation(x=df['time'][p], y=df['close'][localMin[p]],
-                               text='<b>' + str(p) +'lMin' +  '</b>',
+        mcount = 0 
+        for p in localMin:
+            fig.add_annotation(x=df['time'][p], y=df['close'][p],
+                               text='<b>' + str(mcount) +'lMin' +  '</b>',
                                showarrow=True,
                                arrowhead=4,
                                font=dict(
@@ -256,10 +257,12 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                 size=10,
                 # color="#ffffff"
             ),)
+            mcount+=1
     if len(localMax) > 0:
-        for b in range(len(localMax)):
-            fig.add_annotation(x=df['time'][b], y=df['close'][localMax[b]],
-                               text='<b>' + str(b) + 'lMax' +  '</b>',
+        mcount = 0 
+        for b in localMax:
+            fig.add_annotation(x=df['time'][b], y=df['close'][b],
+                               text='<b>' + str(mcount) + 'lMax' +  '</b>',
                                showarrow=True,
                                arrowhead=4,
                                font=dict(
@@ -267,6 +270,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                 size=10,
                 # color="#ffffff"
             ),)
+            mcount+=1
     
     '''
     fig.add_trace(go.Scatter(x=df['time'].iloc[df['time'].searchsorted('09:30:00'):] , y=pd.Series([round(i[2] / (i[2]+i[3]),2) for i in overall]), mode='lines',name='Put Volume'), row=2, col=2)
