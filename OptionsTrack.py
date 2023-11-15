@@ -22,6 +22,7 @@ from google.auth.exceptions import DefaultCredentialsError
 from google.api_core.exceptions import RetryError
 import urllib3
 import calendar
+from google.api_core.exceptions import TooManyRequests
 
 if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
     lastFriday = date.today()
@@ -152,7 +153,7 @@ while True:
             
         #time.sleep(5)
             
-    except(exceptions.BadResponse, DefaultCredentialsError, urllib3.exceptions.MaxRetryError, RetryError):
+    except(exceptions.BadResponse, DefaultCredentialsError, urllib3.exceptions.MaxRetryError, RetryError, TooManyRequests):
         continue
     
     
