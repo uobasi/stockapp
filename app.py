@@ -616,7 +616,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
     fig.add_shape(type="rect",
                       y0=round(sortadlist2[0][0],2)-.3, y1=round(sortadlist2[0][0],2)+.3, x0=-1, x1=len(df),
                       fillcolor="darkcyan",
-                      opacity=0.05)
+                      opacity=0.15)
     
     for v in range(len(sortadlist)):
         if pea:
