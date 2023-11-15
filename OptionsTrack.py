@@ -19,6 +19,7 @@ import json
 from google.cloud.storage import Blob
 from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
+from google.api_core.exceptions import RetryError
 import urllib3
 import calendar
 
@@ -151,7 +152,7 @@ while True:
             
         #time.sleep(5)
             
-    except(exceptions.BadResponse, DefaultCredentialsError, urllib3.exceptions.MaxRetryError):
+    except(exceptions.BadResponse, DefaultCredentialsError, urllib3.exceptions.MaxRetryError, RetryError):
         continue
     
     
