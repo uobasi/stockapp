@@ -22,6 +22,7 @@ from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
 import requests
 from google.api_core.exceptions import TooManyRequests
+from google.api_core.exceptions import RetryError
 import calendar
 
 if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
@@ -106,5 +107,5 @@ while True:
         blob.upload_from_string(json.dumps(final))
             
         
-    except(exceptions.BadResponse, requests.exceptions.ReadTimeout, DefaultCredentialsError, requests.exceptions.ConnectionError, TooManyRequests, urllib3.exceptions.MaxRetryError):
+    except(exceptions.BadResponse, requests.exceptions.ReadTimeout, DefaultCredentialsError, requests.exceptions.ConnectionError, TooManyRequests, urllib3.exceptions.MaxRetryError, RetryError):
         continue
