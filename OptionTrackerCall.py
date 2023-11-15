@@ -97,9 +97,7 @@ while True:
         bTime = df['timestamp'][df[df['time']==df['time'].iloc[0]].index.values[0]]
         
         closePrice = int(df['close'][df.index[-1]])
-        
-        #closePrice =int(429.56)
-        
+
         callPriceList = [closePrice-i for i in range(0,40)]  +  [closePrice+i for i in range(1,40)]
         
         bigCallOrders  = []
@@ -108,7 +106,7 @@ while True:
             tempName = 'O:'+stkName+year[2:] + month + day +'C00'+str(x)+'000'
             #print(tempName)
             for i in list(client.list_trades(tempName, timestamp_gte=int((str(bTime)  + '000000')), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*agMins)) + '000000')), order='asc', limit=50000)):
-                if round(((i.price*100)*i.size),1) >= 4000:#i.size >= 100:
+                if round(((i.price*100)*i.size),1) >= 10000:#i.size >= 100:
                     hourss = datetime.fromtimestamp(int(i.sip_timestamp // 1000000000)).hour
                     if hourss < 10:
                         hourss = '0'+str(hourss)
