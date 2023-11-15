@@ -246,9 +246,9 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
     localMax = argrelextrema(df.close.values, np.greater_equal, order=25)[0]
      
     if len(localMin) > 0:
-        for p in localMin:
-            fig.add_annotation(x=df['time'][p], y=df['close'][p],
-                               text='<b>' + 'lMin' + '</b>',
+        for p in range(len(localMin)):
+            fig.add_annotation(x=df['time'][p], y=df['close'][localMin[p]],
+                               text='<b>' + str(p) +'lMin' +  '</b>',
                                showarrow=True,
                                arrowhead=4,
                                font=dict(
@@ -258,8 +258,8 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
             ),)
     if len(localMax) > 0:
         for b in localMax:
-            fig.add_annotation(x=df['time'][b], y=df['close'][b],
-                               text='<b>' + 'lMax' + '</b>',
+            fig.add_annotation(x=df['time'][b], y=df['close'][localMin[p]],
+                               text='<b>' + str(p) + 'lMax' +  '</b>',
                                showarrow=True,
                                arrowhead=4,
                                font=dict(
@@ -612,12 +612,12 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                             ),
                   row=1, col=1
                  )
-
+    '''
     fig.add_shape(type="rect",
                       y0=round(sortadlist2[0][0],2)-.3, y1=round(sortadlist2[0][0],2)+.3, x0=-1, x1=len(df),
                       fillcolor="darkcyan",
                       opacity=0.15)
-    
+    '''
     for v in range(len(sortadlist)):
         if pea:
             #res = getBAB(df,sortadlist[v][0],stockName)
