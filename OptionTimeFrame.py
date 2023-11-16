@@ -14,6 +14,7 @@ from google.cloud.storage import Blob
 from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
 from google.api_core.exceptions import TooManyRequests
+from google.api_core.exceptions import RetryError
 
 
 times = ['09:30:00',
@@ -301,7 +302,7 @@ while True:
             blob = Blob('OptionTimeFrame'+stkName, bucket) 
             blob.upload_from_string(json.dumps(fList))
             
-    except(FileNotFoundError,IndexError,ValueError,DefaultCredentialsError,TooManyRequests):
+    except(FileNotFoundError,IndexError,ValueError,DefaultCredentialsError,TooManyRequests,RetryError):
         #print('errr')
         continue
 
