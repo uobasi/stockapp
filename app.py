@@ -199,7 +199,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
             hovertext=pd.Series([i[0]+' '+i[1] for i in OptionTimeFrame]),
             
         ),
-        row=2, col=2
+        row=2, col=1
     )
         
     fig.add_trace(
@@ -216,7 +216,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
             hovertext=pd.Series([i[0]+' '+i[1] for i in OptionTimeFrame]),
             
         ),
-        row=2, col=2
+        row=2, col=1
     )
     
     #hovertext = []
@@ -235,9 +235,9 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
     
     
     
-    #fig.add_trace(go.Bar(x=df['time'], y=df['volume'],showlegend=False), row=2, col=2)
+    #fig.add_trace(go.Bar(x=df['time'], y=df['volume'],showlegend=False), row=2, col=1)
     
-    #fig.add_trace(go.Scatter(x=df['time'], y=df['vma'], mode='lines', name='VMA'), row=2, col=2)
+    #fig.add_trace(go.Scatter(x=df['time'], y=df['vma'], mode='lines', name='VMA'), row=2, col=1)
     
     
 
@@ -273,14 +273,14 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
             mcount+=1
     
     '''
-    fig.add_trace(go.Scatter(x=df['time'].iloc[df['time'].searchsorted('09:30:00'):] , y=pd.Series([round(i[2] / (i[2]+i[3]),2) for i in overall]), mode='lines',name='Put Volume'), row=2, col=2)
-    fig.add_trace(go.Scatter(x=df['time'].iloc[df['time'].searchsorted('09:30:00'):] , y=pd.Series([round(i[3] / (i[2]+i[3]),2) for i in overall]), mode='lines',name='Call Volume'), row=2, col=2)
+    fig.add_trace(go.Scatter(x=df['time'].iloc[df['time'].searchsorted('09:30:00'):] , y=pd.Series([round(i[2] / (i[2]+i[3]),2) for i in overall]), mode='lines',name='Put Volume'), row=2, col=1)
+    fig.add_trace(go.Scatter(x=df['time'].iloc[df['time'].searchsorted('09:30:00'):] , y=pd.Series([round(i[3] / (i[2]+i[3]),2) for i in overall]), mode='lines',name='Call Volume'), row=2, col=1)
 
     
     
     '''
-    fig.add_trace(go.Scatter(x=df['time'], y=df_dx, mode='lines',name='Derivative'), row=2, col=1)
-    fig.add_hline(y=0, row=2, col=1, line_color='black')
+    fig.add_trace(go.Scatter(x=df['time'], y=df_dx, mode='lines',name='Derivative'), row=2, col=2)
+    fig.add_hline(y=0, row=2, col=2, line_color='black')
         
     localDevMin = argrelextrema(df_dx, np.less_equal, order=60)[0] 
     localDevMax = argrelextrema(df_dx, np.greater_equal, order=60)[0]
@@ -295,7 +295,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                 #family="Courier New, monospace",
                 size=10,
                 # color="#ffffff"
-            ),row=2, col=1)
+            ),row=2, col=2)
             
     if len(localDevMax) > 0:
         for b in localDevMax:
@@ -307,7 +307,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                 #family="Courier New, monospace",
                 size=10,
                 # color="#ffffff"
-            ),row=2, col=1)
+            ),row=2, col=2)
 
     
     if pea:
@@ -393,7 +393,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                   num1, num2],  opacity=0.5), row=1, col=2)
     
     
-    #fig.add_trace(go.Scatter(x=x_fake, y=df_dx, mode='lines',name='Derivative'), row=2, col=1)
+    #fig.add_trace(go.Scatter(x=x_fake, y=df_dx, mode='lines',name='Derivative'), row=2, col=2)
     
     fig.add_trace(go.Scatter(x=df['time'], y=df['vwap'], mode='lines', name='VWAP'))
     
@@ -691,8 +691,8 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
     
     
     fig.update_xaxes(showticklabels=False, row=1, col=1)
-    fig.update_xaxes(showticklabels=False, row=2, col=1)
     fig.update_xaxes(showticklabels=False, row=2, col=2)
+    fig.update_xaxes(showticklabels=False, row=2, col=1)
     #fig.update_xaxes(showticklabels=False, row=1, col=2)
     #fig.show(config={'modeBarButtonsToAdd': ['drawline']})
     return fig
