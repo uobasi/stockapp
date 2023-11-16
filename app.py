@@ -169,7 +169,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                 CallDecHalf = round(NumCallHalf / sum([float(i[1]) for i in optionOrderList[tindex-1:]]),2)
         
     
-    fig = make_subplots(rows=2, cols=3, shared_xaxes=True, shared_yaxes=False,
+    fig = make_subplots(rows=2, cols=3, shared_xaxes=False, shared_yaxes=False,
                         specs=[[{}, {"colspan": 1}, {"colspan": 1},],
                                [{}, {"colspan": 2,}, {}, ]],
                         horizontal_spacing=0.02, vertical_spacing=0.03, subplot_titles=(stockName + ' '+strTrend+'('+str(average)+')' +' (Put:'+str(putDec)+' ('+str(NumPut)+') | '+'Call:'+str(CallDec)+' ('+str(NumCall)+') '+ '<br>' 
