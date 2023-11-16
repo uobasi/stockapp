@@ -219,8 +219,8 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
         row=2, col=1
     )
 
-    pms = pd.Series([i[2] for i in OptionTimeFrame]).rolling(4).mean()
-    cms = pd.Series([i[3] for i in OptionTimeFrame]).rolling(4).mean()
+    pms = pd.Series([i[2] for i in OptionTimeFrame]).rolling(3).mean()
+    cms = pd.Series([i[3] for i in OptionTimeFrame]).rolling(3).mean()
     fig.add_trace(go.Scatter(x=pd.Series([i[0] for i in OptionTimeFrame]), y=pms, line=dict(color='red'), mode='lines', name='Put VMA'), row=2, col=1)
     fig.add_trace(go.Scatter(x=pd.Series([i[0] for i in OptionTimeFrame]), y=cms, line=dict(color='green'), mode='lines', name='Call VMA'), row=2, col=1)
     
