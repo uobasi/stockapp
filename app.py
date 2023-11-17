@@ -175,7 +175,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                         horizontal_spacing=0.02, vertical_spacing=0.03, subplot_titles=(stockName + ' '+strTrend+'('+str(average)+')' +' (Put:'+str(putDec)+' ('+str(NumPut)+') | '+'Call:'+str(CallDec)+' ('+str(NumCall)+') '+ '<br>' 
                                                                                         +' ( Put:'+str(putDecHalf)+'('+str(NumPutHalf)+') | '+'Call:'+str(CallDecHalf)+'('+str(NumCallHalf)+') '
                                                                                         , 'Volume Profile', str(datetime.now())),
-                         column_widths=[0.65,0.23,0.23], row_width=[0.20, 0.80,]) #row_width=[0.15, 0.85,],
+                         column_widths=[0.65,0.23,0.23], row_width=[0.30, 0.70,]) #row_width=[0.15, 0.85,],
 
     
             
@@ -935,7 +935,7 @@ def update_graph_live(n_intervals):
         else:
             day = str(day)
 
-    #day = '15'
+    day = '16'
     #month = '08'
     agMins = 2
 
