@@ -472,7 +472,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
             else:
                 oppDict[opp[3]] += int(float(opp[1]))
         
-        newOpp = [[i,oppDict[i]] for i in oppDict if oppDict[i] >= 100000]
+        newOpp = [[i,oppDict[i]] for i in oppDict ] #if oppDict[i] >= 100000
         newOpp.sort(key=lambda x:int(x[0][1:])) 
         fig.add_trace(
             go.Bar(
