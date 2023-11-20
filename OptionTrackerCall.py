@@ -65,8 +65,8 @@ month = '08'
 year = '2023'
 '''
 
-day = '30'
-month = '10'
+#day = '30'
+#month = '10'
 
 
 agMins = 2
