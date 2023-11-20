@@ -69,7 +69,7 @@ year = '2023'
 
 
 agMins = 2
-stkName = 'SPY'
+stkName = 'QQQ'
 aggs = []  
 global AllTrade
 AllTrade = []
