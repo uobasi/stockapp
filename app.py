@@ -935,8 +935,8 @@ def update_graph_live(n_intervals):
         else:
             day = str(day)
 
-    #day = '10'
-    #month = '08'
+    #day = '30'
+    #month = '10'
     agMins = 2
 
     try:
@@ -1074,33 +1074,88 @@ def update_graph_live(n_intervals):
     #print(newwT)
 
     
-    
-    gclient = storage.Client(project="stockapp-401615")
-    bucket = gclient.get_bucket("stockapp-storage")
-    blob = Blob('dailyCandle'+stkName, bucket) 
-    fft = json.loads(blob.download_as_text())
-    
-
-    gclient = storage.Client(project="stockapp-401615")
-    bucket = gclient.get_bucket("stockapp-storage")
-    blob = Blob('OptionTrackerPut'+stkName, bucket) 
-    OptionOrdersPut = json.loads(blob.download_as_text())
-            
-    
-    gclient = storage.Client(project="stockapp-401615")
-    bucket = gclient.get_bucket("stockapp-storage")
-    blob = Blob('OptionTrackerCall'+stkName, bucket) 
-    OptionOrdersCall = json.loads(blob.download_as_text())
-            
-    OptionOrders = OptionOrdersPut + OptionOrdersCall
-    OptionOrders.sort(key=lambda x:int(x[2])) 
+    try:
+   
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('dailyCandle'+stkName, bucket) 
+        fft = json.loads(blob.download_as_text())
         
+   
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('OptionTrackerPut'+stkName, bucket) 
+        OptionOrdersPut = json.loads(blob.download_as_text())
+              
+        
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('OptionTrackerCall'+stkName, bucket) 
+        OptionOrdersCall = json.loads(blob.download_as_text())
+              
+        OptionOrders = OptionOrdersPut + OptionOrdersCall
+        OptionOrders.sort(key=lambda x:int(x[2])) 
+         
+    
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('OptionTimeFrame'+stkName, bucket) 
+        OptionTimeFrame = json.loads(blob.download_as_text())
 
-    gclient = storage.Client(project="stockapp-401615")
-    bucket = gclient.get_bucket("stockapp-storage")
-    blob = Blob('OptionTimeFrame'+stkName, bucket) 
-    OptionTimeFrame = json.loads(blob.download_as_text())
+        '''
+        overall = [[i[0]] for i in OptionTimeFrame]
+        for opf in overall:
+            tput = sum([int(x[2]) for x in OptionTimeFrame[:[i[0] for i in OptionTimeFrame].index(opf[0])+1]])
+            tcall = sum([int(x[3]) for x in OptionTimeFrame[:[i[0] for i in OptionTimeFrame].index(opf[0])+1]])
+            ttotal = tput+tcall
+            opf+=[' (Put:'+str(round(tput / ttotal,2))+'('+str(tput)+') | '+'Call:'+str(round(tcall / ttotal,2))+'('+str(tcall)+') ',tput,tcall]
 
+            
+        for o in overall:
+            print(o)
+        #print(overall)
+        
+        import matplotlib.pyplot as plt 
+        import numpy as np 
+          
+        # create data 
+        x = [round(i[2] / (i[2]+i[3]),2) for i in overall] 
+        y = [round(i[3] / (i[2]+i[3]),2) for i in overall] 
+          
+        # plot lines 
+        plt.plot([i for i in range(len(overall))], x, label = "Put") 
+        plt.plot([i for i in range(len(overall))], y, label = "Call")  
+        plt.legend() 
+        plt.show()
+          
+        OptionTimeFrame = [[i, '', '0', '0'] for i in list(df['time'][:bisect.bisect_left(list(df['time'].values),'09:30:00')])]+OptionTimeFrame
+         
+        
+        mminss = [10,15,20,25,30,35,40,60][::-1]
+        for mint in mminss:
+            try:
+                checkTime = (datetime.strptime(OptionTimeFrame[len(OptionTimeFrame)-1][0], '%H:%M:%S') - timedelta(minutes=mint)).time()
+                checkTime.strftime("%H:%M:%S")
+                
+                stIndex = bisect.bisect_left([i[0] for i in OptionTimeFrame],checkTime.strftime("%H:%M:%S"))
+                allputMins = [float(i[2]) for i in OptionTimeFrame[stIndex:]]
+                allcallMins = [float(i[3]) for i in OptionTimeFrame[stIndex:]]
+                deputMins = round(sum(allputMins) / sum(allputMins+allcallMins),2)
+                decallMins = round(sum(allcallMins) / sum(allputMins+allcallMins),2)
+                print('last '+str(mint)+'m: '+ ' (Put:'+str(deputMins)+'('+str(sum(allputMins))+') | '+'Call:'+str(decallMins)+'('+str(sum(allcallMins))+') ')
+            except(ZeroDivisionError,IndexError):
+                continue
+        '''  
+        '''
+        for i in fft:
+            i[10] = int(i[10])
+            
+            if '.' in i[2]:
+                i[2] = i[2][:i[2].index('.')]
+            i[2] = int(i[2])
+        '''
+    except(FileNotFoundError):
+        pass#continue
     
     fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[]) #trends=FindTrends(df,n=10)
     #fg.show(config={'modeBarButtonsToAdd': ['drawline']})
