@@ -935,7 +935,7 @@ def update_graph_live(n_intervals):
         else:
             day = str(day)
 
-    #day = '30'
+    day = '21'
     #month = '10'
     agMins = 2
 
