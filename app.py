@@ -480,7 +480,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                 total = newOpp[i+1][1]+newOpp[i][1]
                 newOpp[i+1].append(round(newOpp[i+1][1]/total,2))
                 newOpp[i].append(round(newOpp[i][1]/total,3))
-            elif newOpp[i][0][1:] != newOpp[i+1][0][1:] and len(newOpp[i]) < 3:
+            elif newOpp[i][0][1:] != newOpp[i+1][0][1:] : #and len(newOpp[i]) < 3
                 newOpp[i].append(1)
 
         fig.add_trace(
