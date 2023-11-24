@@ -214,7 +214,7 @@ times = ['09:30:00',
 '15:58:00',
 '16:00:00']
 
-stkName = 'SPY'
+stkName = 'TSLA'
 enum = ['MidPut', 'BuyPut', 'SellPut', 'MidCall', 'BuyCall', 'SellCall']
 
 while True:  
