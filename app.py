@@ -478,11 +478,18 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
         for i in range(len(newOpp)-1):
             if newOpp[i][0][1:] == newOpp[i+1][0][1:]:
                 total = newOpp[i+1][1]+newOpp[i][1]
-                newOpp[i+1].append(round(newOpp[i+1][1]/total,2))
+                newOpp[i+1].append(round(newOpp[i+1][1]/total,3))
                 newOpp[i].append(round(newOpp[i][1]/total,3))
             elif newOpp[i][0][1:] != newOpp[i+1][0][1:] : #and len(newOpp[i]) < 3
                 newOpp[i].append(1)
-
+        newOpp[len(newOpp)-1].append(1)
+        
+        '''
+        if newOpp[len(newOpp)-1][0][1:] == newOpp[len(newOpp)-2][0][1:]:
+            total = newOpp[len(newOpp)-1][1]+newOpp[len(newOpp)-2][1]
+            newOpp[len(newOpp)-1].append(round(newOpp[len(newOpp)-1][1]/total,3))
+            newOpp[len(newOpp)-2].append(round(newOpp[len(newOpp)-2][1]/total,3))
+        '''
         fig.add_trace(
             go.Bar(
                 x=pd.Series([i[1] for i in newOpp]),
