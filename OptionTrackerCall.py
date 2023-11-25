@@ -70,7 +70,7 @@ year = '2023'
 
 
 agMins = 2
-stkName = 'TSLA'
+stkName = 'IWM'
 aggs = []  
 Tmins = datetime.now()
 global fullS
