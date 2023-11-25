@@ -20,9 +20,10 @@ from google.auth.exceptions import DefaultCredentialsError
 import calendar
 from google.api_core.exceptions import TooManyRequests
 from google.api_core.exceptions import RetryError
+import sys
 
 
-def DailyCandle():
+def DailyCandle(stkName=str(sys.argv[1])):
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
         oneday = timedelta(days=1)
@@ -65,7 +66,7 @@ def DailyCandle():
 
 
     agMins = 2
-    stkName = 'IWM'
+    #stkName = 'IWM'
     aggs = []  
     Tmins = datetime.now()
     global fullS

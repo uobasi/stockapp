@@ -31,11 +31,14 @@ import json
 import calendar
 from google.cloud.storage import Blob
 from google.cloud import storage
-dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py'])
-OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py'])
-OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py'])
-GetAllTrades = subprocess.Popen([sys.executable,'GetAllTrades.py'])
-OptionTimeFrame = subprocess.Popen([sys.executable,'OptionTimeFrame.py'])
+
+global stkName
+stkName = 'IWM'
+dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', stkName])
+OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', stkName])
+OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', stkName])
+GetAllTrades = subprocess.Popen([sys.executable,'GetAllTrades.py', stkName])
+OptionTimeFrame = subprocess.Popen([sys.executable,'OptionTimeFrame.py', stkName])
 global allProcess 
 allProcess = [dailyCandle,OptionsTrack,OptionTrackerCall,GetAllTrades,OptionTimeFrame]#
 
@@ -890,8 +893,7 @@ def splitHun(stkName, trad, quot, num1, num2, quodict):
     #print([Bidd,Askk,Between])    
     return [Bidd,belowBid,Askk,aboveAsk,Between]
 
-global stkName
-stkName = 'IWM'
+
 
 
 from dash import Dash, dcc, html, Input, Output, callback

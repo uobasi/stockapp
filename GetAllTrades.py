@@ -24,8 +24,9 @@ import requests
 from google.api_core.exceptions import TooManyRequests
 from google.api_core.exceptions import RetryError
 import calendar
+import sys
 
-def getAllTrades():
+def getAllTrades(stkName=str(sys.argv[1])):
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
         oneday = timedelta(days=1)
@@ -70,7 +71,7 @@ def getAllTrades():
 
 
     agMins = 2
-    stkName = 'IWM'
+    #stkName = 'IWM'
     aggs = []  
     global AllTrade
     AllTrade = []

@@ -15,8 +15,9 @@ from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
 from google.api_core.exceptions import TooManyRequests
 from google.api_core.exceptions import RetryError
+import sys
 
-def optionTimeFrame():
+def optionTimeFrame(stkName=str(sys.argv[1])):
     times = ['09:30:00',
     '09:32:00',
     '09:34:00',
@@ -214,7 +215,7 @@ def optionTimeFrame():
     '15:58:00',
     '16:00:00']
 
-    stkName = 'IWM'
+    #stkName = 'IWM'
     enum = ['MidPut', 'BuyPut', 'SellPut', 'MidCall', 'BuyCall', 'SellCall']
 
     while True:  

@@ -23,9 +23,10 @@ from google.api_core.exceptions import RetryError
 import urllib3
 import calendar
 from google.api_core.exceptions import TooManyRequests
+import sys
 
 
-def PutOptionTrack():
+def PutOptionTrack(stkName=str(sys.argv[1])):
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
         oneday = timedelta(days=1)
@@ -71,7 +72,7 @@ def PutOptionTrack():
 
 
     agMins = 2
-    stkName = 'IWM'
+    #stkName = 'IWM'
     aggs = []  
     Tmins = datetime.now()
     global fullS
