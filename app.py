@@ -493,7 +493,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
         fig.add_trace(
             go.Bar(
                 x=pd.Series([i[1] for i in newOpp]),
-                y=pd.Series([int(i[0][1:]) for i in newOpp]),
+                y=pd.Series([float(i[0][1:]) for i in newOpp]),
                 text=pd.Series([i[0] for i in newOpp]),
                 textposition='auto',
                 orientation='h',
