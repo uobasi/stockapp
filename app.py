@@ -902,7 +902,7 @@ app.layout = html.Div([
     dcc.Graph(id='graph'),
     dcc.Interval(
         id='interval',
-        interval=60000,
+        interval=62000,
         n_intervals=0,
       )
 ])
