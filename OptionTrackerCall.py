@@ -114,7 +114,7 @@ def CallOptionTrack(stkName=str(sys.argv[1])):
                     
                 #print(tempName)
                 for i in list(client.list_trades(tempName, timestamp_gte=int((str(bTime)  + '000000')), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*agMins)) + '000000')), order='asc', limit=50000)):
-                    if round(((i.price*100)*i.size),1) >= 5000:#i.size >= 100:
+                    if round(((i.price*100)*i.size),1) >= 15000:#i.size >= 100:
                         hourss = datetime.fromtimestamp(int(i.sip_timestamp // 1000000000)).hour
                         if hourss < 10:
                             hourss = '0'+str(hourss)
