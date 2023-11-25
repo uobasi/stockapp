@@ -66,7 +66,7 @@ def getAllTrades(stkName=str(sys.argv[1])):
     year = '2023'
     '''
 
-    day = '20'
+    day = '17'
     #month = '08'
 
 
