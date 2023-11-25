@@ -890,6 +890,8 @@ def splitHun(stkName, trad, quot, num1, num2, quodict):
     #print([Bidd,Askk,Between])    
     return [Bidd,belowBid,Askk,aboveAsk,Between]
 
+global stkName
+stkName = 'IWM'
 
 
 from dash import Dash, dcc, html, Input, Output, callback
@@ -902,7 +904,6 @@ app.layout = html.Div([
         n_intervals=0,
       )
 ])
-
 
 @callback(Output('graph', 'figure'),
           Input('interval', 'n_intervals'))
@@ -918,7 +919,7 @@ def update_graph_live(n_intervals):
     OptionOrdersCall = []
     OptionOrdersPut = []
     OptionTimeFrame = []
-    stkName = 'IWM'
+    #stkName = 'IWM'
     
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
