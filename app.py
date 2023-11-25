@@ -35,8 +35,8 @@ from google.cloud import storage
 global stkName
 stkName = 'IWM'
 dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', stkName])
-OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', stkName])
-OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', stkName])
+OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', stkName, 5000])
+OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', stkName, 5000])
 GetAllTrades = subprocess.Popen([sys.executable,'GetAllTrades.py', stkName])
 OptionTimeFrame = subprocess.Popen([sys.executable,'OptionTimeFrame.py', stkName])
 global allProcess 

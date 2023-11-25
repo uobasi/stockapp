@@ -26,7 +26,7 @@ from google.api_core.exceptions import RetryError
 from google.api_core.exceptions import TooManyRequests
 import sys
 
-def CallOptionTrack(stkName=str(sys.argv[1])):
+def CallOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
         oneday = timedelta(days=1)
@@ -114,7 +114,7 @@ def CallOptionTrack(stkName=str(sys.argv[1])):
                     
                 #print(tempName)
                 for i in list(client.list_trades(tempName, timestamp_gte=int((str(bTime)  + '000000')), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*agMins)) + '000000')), order='asc', limit=50000)):
-                    if round(((i.price*100)*i.size),1) >= 15000:#i.size >= 100:
+                    if round(((i.price*100)*i.size),1) >= priceThreshold#i.size >= 100:
                         hourss = datetime.fromtimestamp(int(i.sip_timestamp // 1000000000)).hour
                         if hourss < 10:
                             hourss = '0'+str(hourss)
