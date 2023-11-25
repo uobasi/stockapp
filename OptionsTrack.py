@@ -69,7 +69,7 @@ year = '2023'
 
 
 agMins = 2
-stkName = 'TSLA'
+stkName = 'IWM'
 aggs = []  
 Tmins = datetime.now()
 global fullS
@@ -98,7 +98,7 @@ while True:
         closePrice = int(df['close'][df.index[-1]])
         
         putPriceList =  [closePrice+i for i in range(0,40)]  +  [closePrice-i for i in range(1,40)]
-        if stkName == 'TSLA':
+        if stkName in ['TSLA', 'IWM']:
             putPriceList +=  [closePrice+(i+2.5) for i in range(0,40)]  +  [closePrice-(i-2.5) for i in range(1,40)]
             
         
@@ -109,7 +109,7 @@ while True:
                 tempName = 'O:'+stkName+year[2:] + month + day +'P00'+str(x)+'000'
             elif isinstance(x, float):
                 tempName = 'O:'+stkName+year[2:] + month + day +'P00'+str(x).replace('.','')+'00'
-                
+
             for i in list(client.list_trades(tempName, timestamp_gte=int((str(bTime)  + '000000')), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*agMins)) + '000000')), order='asc', limit=50000)):
                 if round(((i.price*100)*i.size),1) >= 15000:#i.size >= 100:
                     
