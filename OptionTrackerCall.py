@@ -70,7 +70,7 @@ year = '2023'
 
 
 agMins = 2
-stkName = 'IWM'
+stkName = 'NVDA'
 aggs = []  
 Tmins = datetime.now()
 global fullS
@@ -99,7 +99,7 @@ while True:
         closePrice = int(df['close'][df.index[-1]])
 
         callPriceList = [closePrice-i for i in range(0,40)]  +  [closePrice+i for i in range(1,40)]
-        if stkName in ['TSLA', 'IWM']:
+        if stkName not in ['SPY', 'QQQ']:
             callPriceList +=  [closePrice+(i+2.5) for i in range(0,40)]  +  [closePrice-(i-2.5) for i in range(1,40)]
             
         

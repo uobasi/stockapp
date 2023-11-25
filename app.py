@@ -918,7 +918,7 @@ def update_graph_live(n_intervals):
     OptionOrdersCall = []
     OptionOrdersPut = []
     OptionTimeFrame = []
-    stkName = 'IWM'
+    stkName = 'NVDA'
     
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
