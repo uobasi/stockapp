@@ -33,7 +33,7 @@ from google.cloud.storage import Blob
 from google.cloud import storage
 
 global stkName
-stkName = 'TSLA'
+stkName = 'SPY'
 dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', stkName])
 OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', stkName])
 OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', stkName])
@@ -902,7 +902,7 @@ app.layout = html.Div([
     dcc.Graph(id='graph'),
     dcc.Interval(
         id='interval',
-        interval=65000,
+        interval=60000,
         n_intervals=0,
       )
 ])
