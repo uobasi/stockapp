@@ -33,7 +33,7 @@ from google.cloud.storage import Blob
 from google.cloud import storage
 
 global stkName
-stkName = 'IWM'
+stkName = 'TSLA'
 dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', stkName])
 OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', stkName])
 OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', stkName])
