@@ -99,11 +99,18 @@ while True:
         closePrice = int(df['close'][df.index[-1]])
 
         callPriceList = [closePrice-i for i in range(0,40)]  +  [closePrice+i for i in range(1,40)]
+        if stkName == 'TSLA':
+            callPriceList +=  [closePrice+(i+2.5) for i in range(0,40)]  +  [closePrice-(i-2.5) for i in range(1,40)]
+            
         
         bigCallOrders  = []
         
         for x in callPriceList:
-            tempName = 'O:'+stkName+year[2:] + month + day +'C00'+str(x)+'000'
+            if isinstance(x, int):
+                tempName = 'O:'+stkName+year[2:] + month + day +'C00'+str(x)+'000'
+            elif isinstance(x, float):
+                tempName = 'O:'+stkName+year[2:] + month + day +'C00'+str(x).replace('.','')+'00'
+                
             #print(tempName)
             for i in list(client.list_trades(tempName, timestamp_gte=int((str(bTime)  + '000000')), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*agMins)) + '000000')), order='asc', limit=50000)):
                 if round(((i.price*100)*i.size),1) >= 15000:#i.size >= 100:
