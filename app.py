@@ -33,7 +33,7 @@ from google.cloud.storage import Blob
 from google.cloud import storage
 
 global stkName
-stkName = 'NVDA'
+stkName = 'TSLA'
 priceThreshold = '15000'
 dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', stkName])
 OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', stkName, priceThreshold])
