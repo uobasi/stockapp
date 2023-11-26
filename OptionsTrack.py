@@ -74,9 +74,6 @@ def PutOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
     agMins = 2
     #stkName = 'IWM'
     aggs = []  
-    Tmins = datetime.now()
-    global fullS
-    fullS = {}
 
 
     while True: 
