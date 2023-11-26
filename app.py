@@ -34,7 +34,7 @@ from google.cloud import storage
 
 global stkName
 stkName = 'IWM'
-priceThreshold = '5000'
+priceThreshold = '15000'
 dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', stkName])
 OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', stkName, priceThreshold])
 OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', stkName, priceThreshold])
