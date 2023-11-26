@@ -846,14 +846,17 @@ def historV1(df, num, quodict, trad:list=[], quot:list=[]):
     pzie = [i for i in dct if dct[i] > 500]#list(set(pzie))
     
     hist, bin_edges = np.histogram(pzie, bins=num)
+    trads = sorted(trad, key=lambda stock: float(stock[0]))
     
     cptemp = []
     cntt = 0
     for i in range(len(hist)):
         pziCount = 0
-        for x in trad:
+        for x in trads:
             if bin_edges[i] <= x[0] < bin_edges[i+1]:
                 pziCount += x[1]
+            if x[0] > bin_edges[i+1]:
+                break
         if pziCount > 100:
             cptemp.append([bin_edges[i],pziCount,cntt,bin_edges[i+1]])
             cntt+=1
