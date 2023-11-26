@@ -898,7 +898,7 @@ def splitHun(stkName, trad, quot, num1, num2, quodict):
 
 from dash import Dash, dcc, html, Input, Output, callback
 if stkName == 'TSLA':
-    inter = 150000
+    inter = 180000
     vpVal = 30
 else:
     inter = 60000
