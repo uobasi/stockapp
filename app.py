@@ -33,7 +33,7 @@ from google.cloud.storage import Blob
 from google.cloud import storage
 
 global stkName
-stkName = 'TSLA'
+stkName = 'NVDA'
 priceThreshold = '15000'
 dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', stkName])
 OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', stkName, priceThreshold])
@@ -158,6 +158,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
         CallDec = round(NumCall / sum([float(i[1]) for i in optionOrderList]),2)
         
     
+    '''
     NumPutHalf = 0
     NumCallHalf = 0
     putDecHalf = 0
@@ -171,14 +172,12 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
             if len(optionOrderList) > 0:
                 putDecHalf = round(NumPutHalf / sum([float(i[1]) for i in optionOrderList[tindex-1:]]),2)
                 CallDecHalf = round(NumCallHalf / sum([float(i[1]) for i in optionOrderList[tindex-1:]]),2)
-        
+    '''   
     
     fig = make_subplots(rows=2, cols=3, shared_xaxes=False, shared_yaxes=False,
                         specs=[[{}, {"colspan": 1}, {"colspan": 1},],
-                               [{}, {"colspan": 2,}, {}, ]],
-                        horizontal_spacing=0.02, vertical_spacing=0.03, subplot_titles=(stockName + ' '+strTrend+'('+str(average)+')' +' (Put:'+str(putDec)+' ('+str(NumPut)+') | '+'Call:'+str(CallDec)+' ('+str(NumCall)+') '+ '<br>' 
-                                                                                        +' ( Put:'+str(putDecHalf)+'('+str(NumPutHalf)+') | '+'Call:'+str(CallDecHalf)+'('+str(NumCallHalf)+') '
-                                                                                        , 'Volume Profile', str(datetime.now())),
+                               [{}, {"colspan": 2,}, {}, ]], #'+ '<br>' +' ( Put:'+str(putDecHalf)+'('+str(NumPutHalf)+') | '+'Call:'+str(CallDecHalf)+'('+str(NumCallHalf)+') '
+                        horizontal_spacing=0.02, vertical_spacing=0.03, subplot_titles=(stockName + ' '+strTrend+'('+str(average)+')' +' (Put:'+str(putDec)+' ('+str(NumPut)+') | '+'Call:'+str(CallDec)+' ('+str(NumCall)+') ', 'Volume Profile', str(datetime.now())),
                          column_widths=[0.65,0.23,0.23], row_width=[0.30, 0.70,]) #row_width=[0.15, 0.85,],
 
     
@@ -1039,7 +1038,7 @@ def update_graph_live(n_intervals):
     # derivative of y with respect to x
     df_dx = derivative(f, x_fake, dx=1e-6)
     
-    mTrade = [i for i in AllTrade if i[1] >= 10000]
+    mTrade = [i for i in AllTrade if i[1] >= 20000]
     
     mTrade = sorted(mTrade, key=lambda d: d[1], reverse=True) 
     
