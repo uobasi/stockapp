@@ -66,7 +66,7 @@ def CallOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
     year = '2023'
     '''
 
-    day = '17'
+    day = '10'
     #month = '08'
 
 
