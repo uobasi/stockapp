@@ -913,7 +913,7 @@ if stkName == 'TSLA':
     vpVal = 30
 else:
     inter = 60000
-    vpVal = 50
+    vpVal = 40
 app = Dash()
 app.layout = html.Div([
     dcc.Graph(id='graph'),
@@ -930,7 +930,6 @@ app.layout = html.Div([
 def update_graph_live(n_intervals):
     print('inFunction')	
     fft = []
-    global AllTrade
     AllTrade = []
     AllQuote = []
     quodict = {}
@@ -1117,7 +1116,7 @@ def update_graph_live(n_intervals):
     
     fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[]) #trends=FindTrends(df,n=10)
     #fg.show(config={'modeBarButtonsToAdd': ['drawline']})
-    
+    time.sleep(5)
     return fg
         
 
