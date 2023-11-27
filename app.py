@@ -49,7 +49,7 @@ for s in symbols:
 
 
 global stkName
-stkName = 'IWM'
+stkName = 'SPY'
 
 def killAll():
     for i in allProcess:
