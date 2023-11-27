@@ -912,7 +912,7 @@ if stkName == 'TSLA':
     inter = 120000
     vpVal = 30
 else:
-    inter = 60000
+    inter = 84000
     vpVal = 40
 app = Dash()
 app.layout = html.Div([
