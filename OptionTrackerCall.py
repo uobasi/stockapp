@@ -158,7 +158,7 @@ def CallOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
             blob.upload_from_string(json.dumps(total))
                 
             #time.sleep(5)
-        except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError, DefaultCredentialsError, RetryError, TooManyRequests, urllib3.exceptions.ReadTimeoutError):
+        except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError, DefaultCredentialsError, RetryError, TooManyRequests, urllib3.exceptions.ReadTimeoutError, requests.exceptions.ReadTimeout):
             continue
 
 

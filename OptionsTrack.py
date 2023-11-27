@@ -15,6 +15,7 @@ import csv
 import time
 import bisect
 from polygon import exceptions
+import requests
 import json
 from google.cloud.storage import Blob
 from google.cloud import storage
@@ -159,7 +160,7 @@ def PutOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
                 
             #time.sleep(5)
                 
-        except(exceptions.BadResponse, DefaultCredentialsError, urllib3.exceptions.MaxRetryError, RetryError, TooManyRequests, urllib3.exceptions.ReadTimeoutError):
+        except(exceptions.BadResponse, DefaultCredentialsError, urllib3.exceptions.MaxRetryError, RetryError, TooManyRequests, urllib3.exceptions.ReadTimeoutError, requests.exceptions.ReadTimeout):
             continue
         
         
