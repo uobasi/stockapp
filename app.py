@@ -34,6 +34,7 @@ from google.cloud import storage
 
 global allProcess 
 allProcess = []
+global symbols
 symbols = ['SPY','QQQ','IWM']
 for s in symbols:
     if s == 'IWM':
@@ -922,7 +923,26 @@ app.layout = html.Div([
         interval=inter,
         n_intervals=0,
       )
+    html.Div(dcc.Input(id='input-on-submit', type='text')),
+    html.Button('Submit', id='submit-val', n_clicks=0),
+    html.Div(id='container-button-basic',
+             children='Enter a value and press submit')
+
 ])
+
+@callback(
+    Output('container-button-basic', 'children'),
+    Input('submit-val', 'n_clicks'),
+    State('input-on-submit', 'value'),
+    prevent_initial_call=True
+)
+def update_output(n_clicks, value):
+    value = str(value).upper() 
+    if value in symbols:
+        stkName = value
+        return 'The input symbol was "{}" '.format(value)
+    else:
+        return 'The input symbol was "{}" is not accepted please try different symbol '.format(value)
 
 @callback(Output('graph', 'figure'),
           Input('interval', 'n_intervals'))
@@ -1032,7 +1052,7 @@ def update_graph_live(n_intervals):
     # derivative of y with respect to x
     df_dx = derivative(f, x_fake, dx=1e-6)
     
-    mTrade = [i for i in AllTrade if i[1] >= 20000]
+    mTrade = [i for i in AllTrade if i[1] >= 10000]
     
     mTrade = sorted(mTrade, key=lambda d: d[1], reverse=True) 
     
