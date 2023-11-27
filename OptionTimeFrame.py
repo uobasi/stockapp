@@ -16,6 +16,8 @@ from google.auth.exceptions import DefaultCredentialsError
 from google.api_core.exceptions import TooManyRequests
 from google.api_core.exceptions import RetryError
 import sys
+import requests
+import urllib3
 
 def optionTimeFrame(stkName=str(sys.argv[1])):
     times = ['09:30:00',
@@ -303,7 +305,7 @@ def optionTimeFrame(stkName=str(sys.argv[1])):
                 blob = Blob('OptionTimeFrame'+stkName, bucket) 
                 blob.upload_from_string(json.dumps(fList))
                 
-        except(FileNotFoundError,IndexError,ValueError,DefaultCredentialsError,TooManyRequests,RetryError):
+        except(FileNotFoundError,IndexError,ValueError,DefaultCredentialsError,TooManyRequests,RetryError, requests.exceptions.ReadTimeout, urllib3.exceptions.ReadTimeoutError):
             #print('errr')
             continue
 

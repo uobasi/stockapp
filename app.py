@@ -823,26 +823,6 @@ def valueAreaV1(lst):
 
 
 def historV1(df, num, quodict, trad:list=[], quot:list=[]):
-    '''
-    bTime = df['timestamp'][df[df['time']==df['time'].iloc[0]].index.values[0]]
-    if len(trad) == 0:
-        trad = list(client.list_trades(stkName, timestamp_gte=int((str(bTime)  + '000000')), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*2)) + '000000')), order='asc', limit=50000))
-        #AllTrade = trad
-    
-    else:
-        trad = list(client.list_trades(stkName, timestamp_gte=int((str(bTime)  + '000000')), timestamp_lte=int((str(AllTrade[len(AllTrade)].participant_timestamp+(60000*2)) + '000000')), order='asc', limit=50000))
-        AllTrade += trad
-
-    if len(quot) == 0:
-        quot = list(client.list_quotes(stkName, timestamp_gte=int((str(bTime) + '000000')), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*2)) + '000000')), order='asc', limit=50000))
-        #AllQuote = quot
-    
-    else:
-        quot = list(client.list_quotes(stkName, timestamp_gte=int((str(bTime-18000) + '000000')), timestamp_lte=int((str(AllQuote[len(AllQuote)].participant_timestamp+(60000*2)) + '000000')), order='asc', limit=50000))
-        AllQuote += quot
-    '''
-
-    
     pzie = [(i[0],i[1]) for i in trad]
     dct ={}
     for i in pzie:
@@ -928,6 +908,8 @@ app.layout = html.Div([
     html.Div(dcc.Input(id='input-on-submit', type='text')),
     html.Button('Submit', id='submit-val', n_clicks=0),
     html.Div(id='container-button-basic',children='Enter a value and press submit'),
+
+    dcc.Store(id='stkName-value')
     
     
 
