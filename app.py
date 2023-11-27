@@ -917,15 +917,18 @@ else:
     vpVal = 40
 app = Dash()
 app.layout = html.Div([
-    html.Div(dcc.Input(id='input-on-submit', type='text')),
-    html.Button('Submit', id='submit-val', n_clicks=0),
-    html.Div(id='container-button-basic',children='Enter a value and press submit'),
+    
     dcc.Graph(id='graph'),
     dcc.Interval(
         id='interval',
         interval=inter,
         n_intervals=0,
       ),
+
+    html.Div(dcc.Input(id='input-on-submit', type='text')),
+    html.Button('Submit', id='submit-val', n_clicks=0),
+    html.Div(id='container-button-basic',children='Enter a value and press submit'),
+    
     
 
 ])
@@ -934,9 +937,9 @@ app.layout = html.Div([
     Output('container-button-basic', 'children'),
     Input('submit-val', 'n_clicks'),
     State('input-on-submit', 'value'),
-    #prevent_initial_call=True
+    prevent_initial_call=True
 )
-def update_output(n_clicks, value):
+def update_output(value):
     value = str(value).upper() 
     if value in symbols:
         stkName = value
