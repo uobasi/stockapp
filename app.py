@@ -921,7 +921,8 @@ app.layout = html.Div([
     State('input-on-submit', 'value'),
     prevent_initial_call=True
 )
-def update_output(value):
+
+def update_output(n_clicks, value):
     value = str(value).upper() 
     if value in symbols:
         stkName = value
