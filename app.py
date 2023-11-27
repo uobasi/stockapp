@@ -32,16 +32,24 @@ import calendar
 from google.cloud.storage import Blob
 from google.cloud import storage
 
+global allProcess 
+allProcess = []
+symbols = ['SPY','QQQ','IWM']
+for s in symbols:
+    if s == 'IWM':
+        priceThreshold = '5000'
+    else:
+        priceThreshold = '15000'
+    dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', s])
+    OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', s, priceThreshold])
+    OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', s, priceThreshold])
+    GetAllTrades = subprocess.Popen([sys.executable,'GetAllTrades.py', s])
+    OptionTimeFrame = subprocess.Popen([sys.executable,'OptionTimeFrame.py', s])
+    allProcess += [dailyCandle,OptionsTrack,OptionTrackerCall,GetAllTrades,OptionTimeFrame]
+
+
 global stkName
 stkName = 'IWM'
-priceThreshold = '15000'
-dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', stkName])
-OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', stkName, priceThreshold])
-OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', stkName, priceThreshold])
-GetAllTrades = subprocess.Popen([sys.executable,'GetAllTrades.py', stkName])
-OptionTimeFrame = subprocess.Popen([sys.executable,'OptionTimeFrame.py', stkName])
-global allProcess 
-allProcess = [dailyCandle,OptionsTrack,OptionTrackerCall,GetAllTrades,OptionTimeFrame]#
 
 def killAll():
     for i in allProcess:
@@ -1003,28 +1011,6 @@ def update_graph_live(n_intervals):
     AllTrade = json.loads(blob.download_as_text())
 
     AllTrade = [[float(i[0]), int(float(i[1])), int(i[2]), int(i[3])] for i in AllTrade]
-    
-    
-    '''
-    if len(AllTrade) == 0:
-        AllTrade = list(client.list_trades(stkName, timestamp_gte=int((str(bTime)  + '000000')), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*agMins)) + '000000')), order='asc', limit=50000))
-    else:
-        trad = list(client.list_trades(stkName, timestamp_gt=int(str(AllTrade[len(AllTrade)-1].participant_timestamp)), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*agMins)) + '000000')), order='asc', limit=50000))
-        AllTrade += trad
-    
-    
-    if len(AllQuote) == 0:
-        AllQuote = list(client.list_quotes(stkName, timestamp_gte=int((str(bTime) + '000000')), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*agMins)) + '000000')), order='asc', limit=50000))
-        for i in AllQuote:
-            quodict[i.participant_timestamp] = [i.bid_price, i.ask_price]
-    else:
-        quot = list(client.list_quotes(stkName, timestamp_gt=int(str(AllQuote[len(AllQuote)-1].participant_timestamp)), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*agMins)) + '000000')), order='asc', limit=50000))
-        for i in quot:
-            quodict[i.participant_timestamp] = [i.bid_price, i.ask_price]
-        AllQuote += quot 
-    '''
-    #print(len(AllTrade))
-    
 
     vwap(df)
     ema(df)
