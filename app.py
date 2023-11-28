@@ -934,7 +934,7 @@ def update_output(n_clicks, value):
 
 @callback(Output('graph', 'figure'),
           Input('interval', 'n_intervals'),
-          Input('data', 'stkName-value'))
+          Input('stkName-value', 'data'))
 
 def update_graph_live(n_intervals, data):
     print('inFunction')	
