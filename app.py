@@ -908,33 +908,25 @@ app.layout = html.Div([
     html.Div(dcc.Input(id='input-on-submit', type='text')),
     html.Button('Submit', id='submit-val', n_clicks=0),
     html.Div(id='container-button-basic',children='Enter a value and press submit'),
-
-    dcc.Store(id='stkName-value')
+    
     
     
 
 ])
 
 @callback(
-    Output('stkName-value', 'data'),
     Output('container-button-basic', 'children'),
     Input('submit-val', 'n_clicks'),
     State('input-on-submit', 'value'),
     prevent_initial_call=True
 )
-
-def update_output(n_clicks, value):
+def update_output(value):
     value = str(value).upper() 
     if value in symbols:
         stkName = value
-        print('The input symbol was "{}" '.format(value))
-        gclient = storage.Client(project="stockapp-401615")
-        bucket = gclient.get_bucket("stockapp-storage")
-        blob = Blob('CuurentStockName', bucket) 
-        blob.upload_from_string(str(value).upper())
-        return str(value).upper(), str(value).upper()
+        return 'The input symbol was "{}" '.format(value)
     else:
-        return 'The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol '
+        return 'The input symbol was "{}" is not accepted please try different symbol '.format(value)
 
 @callback(Output('graph', 'figure'),
           Input('interval', 'n_intervals'))
@@ -950,7 +942,6 @@ def update_graph_live(n_intervals):
     OptionOrdersPut = []
     OptionTimeFrame = []
     #stkName = 'IWM'
-    #print(data)
     
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
@@ -983,7 +974,7 @@ def update_graph_live(n_intervals):
         else:
             day = str(day)
 
-    day = '27'
+    #day = '03'
     #month = '10'
     agMins = 2
 
