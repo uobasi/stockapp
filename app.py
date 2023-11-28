@@ -928,14 +928,18 @@ def update_output(n_clicks, value):
     if value in symbols:
         stkName = value
         print('The input symbol was "{}" '.format(value))
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('New'+value, bucket) 
+        blob.upload_from_string(str(value).upper())
         return str(value).upper(), str(value).upper()
     else:
         return 'The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol '
 
 @callback(Output('graph', 'figure'),
-          [Input('interval', 'n_intervals'),Input('stkName-value', 'data')])
+          Input('interval', 'n_intervals'),)
 
-def update_graph_live(n_intervals, data):
+def update_graph_live(n_intervals,):
     print('inFunction')	
     fft = []
     AllTrade = []
@@ -946,7 +950,7 @@ def update_graph_live(n_intervals, data):
     OptionOrdersPut = []
     OptionTimeFrame = []
     #stkName = 'IWM'
-    print(data)
+    #print(data)
     
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
