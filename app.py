@@ -937,9 +937,9 @@ def update_output(n_clicks, value):
         return 'The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol '
 
 @callback(Output('graph', 'figure'),
-          Input('interval', 'n_intervals'),)
+          Input('interval', 'n_intervals'))
 
-def update_graph_live(n_intervals,):
+def update_graph_live(n_intervals):
     print('inFunction')	
     fft = []
     AllTrade = []
@@ -983,7 +983,7 @@ def update_graph_live(n_intervals,):
         else:
             day = str(day)
 
-    #day = '03'
+    day = '27'
     #month = '10'
     agMins = 2
 
