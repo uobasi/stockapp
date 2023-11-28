@@ -933,8 +933,7 @@ def update_output(n_clicks, value):
         return 'The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol '
 
 @callback(Output('graph', 'figure'),
-          Input('interval', 'n_intervals'),
-          Input('stkName-value', 'data'))
+          [Input('interval', 'n_intervals'),Input('stkName-value', 'data')])
 
 def update_graph_live(n_intervals, data):
     print('inFunction')	
