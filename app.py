@@ -930,7 +930,7 @@ def update_output(n_clicks, value):
         print('The input symbol was "{}" '.format(value))
         gclient = storage.Client(project="stockapp-401615")
         bucket = gclient.get_bucket("stockapp-storage")
-        blob = Blob('New'+value, bucket) 
+        blob = Blob('CuurentStockName', bucket) 
         blob.upload_from_string(str(value).upper())
         return str(value).upper(), str(value).upper()
     else:
