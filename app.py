@@ -930,7 +930,7 @@ def update_output(n_clicks, value):
         print('The input symbol was "{}" '.format(value))
         return str(value).upper(), str(value).upper()
     else:
-        return 'The input symbol was '+str(value)+' is not accepted please try different symbol ', str(value).upper()
+        return 'The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol '
 
 @callback(Output('graph', 'figure'),
           Input('interval', 'n_intervals'))
