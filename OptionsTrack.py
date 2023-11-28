@@ -68,7 +68,7 @@ def PutOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
     year = '2023'
     '''
 
-    day = '27'
+    #day = '27'
     #month = '08'
 
 

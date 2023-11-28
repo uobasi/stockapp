@@ -893,7 +893,7 @@ if stkName == 'TSLA':
     inter = 120000
     vpVal = 30
 else:
-    inter = 120000
+    inter = 110000
     vpVal = 40
 app = Dash()
 app.layout = html.Div([
@@ -970,7 +970,7 @@ def update_graph_live(n_intervals):
         else:
             day = str(day)
 
-    day = '27'
+    #day = '27'
     #month = '10'
     agMins = 2
 
