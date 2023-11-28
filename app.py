@@ -916,7 +916,7 @@ app.layout = html.Div([
 ])
 
 @callback(
-    Output('container-button-basic', 'children'),
+    Output('stkName-value', 'data'),
     Input('submit-val', 'n_clicks'),
     State('input-on-submit', 'value'),
     prevent_initial_call=True
@@ -926,7 +926,8 @@ def update_output(n_clicks, value):
     value = str(value).upper() 
     if value in symbols:
         stkName = value
-        return 'The input symbol was "{}" '.format(value)
+        print('The input symbol was "{}" '.format(value))
+        return str(value).upper() 
     else:
         return 'The input symbol was "{}" is not accepted please try different symbol '.format(value)
 
