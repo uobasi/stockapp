@@ -905,25 +905,31 @@ app.layout = html.Div([
         n_intervals=0,
       ),
 
-    #html.Div(dcc.Input(id='input-on-submit', type='text')),
-    #html.Button('Submit', id='submit-val', n_clicks=0),
-    #html.Div(id='container-button-basic',children='Enter a value and press submit'),
+    html.Div(dcc.Input(id='input-on-submit', type='text')),
+    html.Button('Submit', id='submit-val', n_clicks=0),
+    html.Div(id='container-button-basic',children='Enter a value and press submit'),
+
+    dcc.Store(id='stkName-value')
+    
+    
 ])
-'''
 @callback(
+    Output('stkName-value', 'data'),
     Output('container-button-basic', 'children'),
     Input('submit-val', 'n_clicks'),
     State('input-on-submit', 'value'),
     prevent_initial_call=True
 )
-def update_output(value):
+
+def update_output(n_clicks, value):
     value = str(value).upper() 
     if value in symbols:
-        stkName = value
-        return 'The input symbol was "{}" '.format(value)
+        print('The input symbol was "{}" '.format(value))
+        return str(value).upper(), str(value).upper()
     else:
-        return 'The input symbol was "{}" is not accepted please try different symbol '.format(value)
-'''
+        return 'The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol '
+
+
 @callback(Output('graph', 'figure'),
           Input('interval', 'n_intervals'))
 
