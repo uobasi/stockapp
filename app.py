@@ -40,7 +40,7 @@ for s in symbols:
     if s == 'IWM':
         priceThreshold = '5000'
     else:
-        priceThreshold = '15000'
+        priceThreshold = '10000'
     dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', s])
     OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', s, priceThreshold])
     OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', s, priceThreshold])
