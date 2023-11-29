@@ -931,9 +931,10 @@ def update_output(n_clicks, value):
 
 
 @callback(Output('graph', 'figure'),
-          Input('interval', 'n_intervals'))
+          Input('interval', 'n_intervals'),
+          State('stkName-value', 'data'))
 
-def update_graph_live(n_intervals):
+def update_graph_live(n_intervals, data):
     print('inFunction')	
     fft = []
     AllTrade = []
@@ -944,6 +945,7 @@ def update_graph_live(n_intervals):
     OptionOrdersPut = []
     OptionTimeFrame = []
     #stkName = 'IWM'
+    print(data)
     
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
