@@ -250,7 +250,7 @@ def DailyCandle(stkName=str(sys.argv[1])):
                     '''
                     fullS.append([round(lsr[ind]/sum(lsr),3), enum[ind], lsr[ind],]+vv+lsr+[stkName])
                     #fft.append([round(lsr[ind]/sum(lsr),2), enum[ind], lsr[ind],]+vv+lsr+[df['time'].searchsorted(vv[0])]+[stkName])
-                    print([round(lsr[ind]/sum(lsr),3), enum[ind], lsr[ind],]+vv+lsr+[stkName])
+                    #------print([round(lsr[ind]/sum(lsr),3), enum[ind], lsr[ind],]+vv+lsr+[stkName])
                     #if round(lsr[ind]/sum(lsr),3) >= 0.46 and lsr[ind] >= 210000: #or (lsr[ind] >= 160000 and round(lsr[ind]/sum(lsr),3) >= 0.650):
                     if [round(lsr[ind]/sum(lsr),2), enum[ind], lsr[ind],]+vv+lsr+[df['time'].searchsorted(vv[0])]+[stkName] not in fft:
                     #if int(str(time.time()).replace('.', '')  + '00') >=  int(str(vv[1]+(60000*agMins)) + '000000'):
