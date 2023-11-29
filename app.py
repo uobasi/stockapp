@@ -1061,9 +1061,13 @@ def update_graph_live(n_intervals):
         if secs < 10:
             secs = '0'+str(secs)
         opttimeStamp = str(hourss) + ':' + str(minss) + ':'+ str(secs)
-                                             
-        for t in client.list_quotes(stkName, timestamp_lte = i[2]):        
-            break 
+
+        try:                        
+            for t in client.list_quotes(stkName, timestamp_lte = i[2]):        
+                break 
+        except(exceptions.BadResponse):
+            for t in client.list_quotes(stkName, timestamp_lte = i[2]):        
+                break 
         
         if i[0] == t.ask_price:
             #i.append('A (buyer agreed to buy the asset at the price)')
