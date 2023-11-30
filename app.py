@@ -907,12 +907,12 @@ app.layout = html.Div([
         n_intervals=0,
       ),
 
-    html.Div(dcc.Input(id='input-on-submit', type='text')),
-    html.Button('Submit', id='submit-val', n_clicks=0),
-    html.Div(id='container-button-basic',children='Enter a stock symbol and press submit'),
-    dcc.Store(id='stkName-value')
+    #html.Div(dcc.Input(id='input-on-submit', type='text')),
+    #html.Button('Submit', id='submit-val', n_clicks=0),
+    #html.Div(id='container-button-basic',children='Enter a stock symbol and press submit'),
+    #dcc.Store(id='stkName-value')
 ])
-
+'''
 @callback(
     Output('stkName-value', 'data'),
     Output('container-button-basic', 'children'),
@@ -930,10 +930,10 @@ def update_output(n_clicks, value):
         return ['The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol ']
 
 @callback(Output('graph', 'figure'),
-          Input('interval', 'n_intervals'),
-          State('stkName-value', 'data'))
+          Input('interval', 'n_intervals'),)
+          #State('stkName-value', 'data'))
 
-def update_graph_live(n_intervals, data):
+def update_graph_live(n_intervals): #, data
     print('inFunction')	
     fft = []
     AllTrade = []
