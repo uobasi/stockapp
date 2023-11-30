@@ -40,7 +40,7 @@ for s in symbols:
     if s == 'IWM':
         priceThreshold = '5000'
     else:
-        priceThreshold = '10000'
+        priceThreshold = '5000'
     dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', s])
     OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', s, priceThreshold])
     OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', s, priceThreshold])
@@ -905,36 +905,29 @@ app.layout = html.Div([
         n_intervals=0,
       ),
 
-    html.Div(dcc.Input(id='input-on-submit', type='text')),
-    html.Button('Submit', id='submit-val', n_clicks=0),
-    html.Div(id='container-button-basic',children='Enter a value and press submit'),
-
-    dcc.Store(id='stkName-value')
-    
-    
+    #html.Div(dcc.Input(id='input-on-submit', type='text')),
+    #html.Button('Submit', id='submit-val', n_clicks=0),
+    #html.Div(id='container-button-basic',children='Enter a value and press submit'),
 ])
+'''
 @callback(
-    Output('stkName-value', 'data'),
     Output('container-button-basic', 'children'),
     Input('submit-val', 'n_clicks'),
     State('input-on-submit', 'value'),
     prevent_initial_call=True
 )
-
-def update_output(n_clicks, value):
+def update_output(value):
     value = str(value).upper() 
     if value in symbols:
-        print('The input symbol was "{}" '.format(value))
-        return str(value).upper(), str(value).upper()
+        stkName = value
+        return 'The input symbol was "{}" '.format(value)
     else:
-        return 'The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol '
-
-
+        return 'The input symbol was "{}" is not accepted please try different symbol '.format(value)
+'''
 @callback(Output('graph', 'figure'),
-          Input('interval', 'n_intervals'),
-          Input('stkName-value', 'data'))
+          Input('interval', 'n_intervals'))
 
-def update_graph_live(n_intervals, data):
+def update_graph_live(n_intervals):
     print('inFunction')	
     fft = []
     AllTrade = []
@@ -945,7 +938,6 @@ def update_graph_live(n_intervals, data):
     OptionOrdersPut = []
     OptionTimeFrame = []
     #stkName = 'IWM'
-    print(data)
     
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
