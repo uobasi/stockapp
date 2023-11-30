@@ -31,6 +31,7 @@ import json
 import calendar
 from google.cloud.storage import Blob
 from google.cloud import storage
+from google.api_core.exceptions import RetryError
 
 global allProcess 
 allProcess = []
@@ -1090,32 +1091,58 @@ def update_graph_live(n_intervals):
         
     #print(newwT)
 
-   
-    gclient = storage.Client(project="stockapp-401615")
-    bucket = gclient.get_bucket("stockapp-storage")
-    blob = Blob('dailyCandle'+stkName, bucket) 
-    fft = json.loads(blob.download_as_text())
-    
-
-    gclient = storage.Client(project="stockapp-401615")
-    bucket = gclient.get_bucket("stockapp-storage")
-    blob = Blob('OptionTrackerPut'+stkName, bucket) 
-    OptionOrdersPut = json.loads(blob.download_as_text())
-            
-    
-    gclient = storage.Client(project="stockapp-401615")
-    bucket = gclient.get_bucket("stockapp-storage")
-    blob = Blob('OptionTrackerCall'+stkName, bucket) 
-    OptionOrdersCall = json.loads(blob.download_as_text())
-            
-    OptionOrders = OptionOrdersPut + OptionOrdersCall
-    OptionOrders.sort(key=lambda x:int(x[2])) 
+    try:
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('dailyCandle'+stkName, bucket) 
+        fft = json.loads(blob.download_as_text())
         
 
-    gclient = storage.Client(project="stockapp-401615")
-    bucket = gclient.get_bucket("stockapp-storage")
-    blob = Blob('OptionTimeFrame'+stkName, bucket) 
-    OptionTimeFrame = json.loads(blob.download_as_text())
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('OptionTrackerPut'+stkName, bucket) 
+        OptionOrdersPut = json.loads(blob.download_as_text())
+                
+        
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('OptionTrackerCall'+stkName, bucket) 
+        OptionOrdersCall = json.loads(blob.download_as_text())
+                
+        OptionOrders = OptionOrdersPut + OptionOrdersCall
+        OptionOrders.sort(key=lambda x:int(x[2])) 
+            
+
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('OptionTimeFrame'+stkName, bucket) 
+        OptionTimeFrame = json.loads(blob.download_as_text())
+    except(RetryError):
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('dailyCandle'+stkName, bucket) 
+        fft = json.loads(blob.download_as_text())
+        
+
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('OptionTrackerPut'+stkName, bucket) 
+        OptionOrdersPut = json.loads(blob.download_as_text())
+                
+        
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('OptionTrackerCall'+stkName, bucket) 
+        OptionOrdersCall = json.loads(blob.download_as_text())
+                
+        OptionOrders = OptionOrdersPut + OptionOrdersCall
+        OptionOrders.sort(key=lambda x:int(x[2])) 
+            
+
+        gclient = storage.Client(project="stockapp-401615")
+        bucket = gclient.get_bucket("stockapp-storage")
+        blob = Blob('OptionTimeFrame'+stkName, bucket) 
+        OptionTimeFrame = json.loads(blob.download_as_text())
 
     
     fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[]) #trends=FindTrends(df,n=10)
