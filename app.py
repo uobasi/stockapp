@@ -907,12 +907,12 @@ app.layout = html.Div([
         n_intervals=0,
       ),
 
-    #html.Div(dcc.Input(id='input-on-submit', type='text')),
-    #html.Button('Submit', id='submit-val', n_clicks=0),
-    #html.Div(id='container-button-basic',children='Enter a stock symbol and press submit'),
-    #dcc.Store(id='stkName-value')
+    html.Div(dcc.Input(id='input-on-submit', type='text')),
+    html.Button('Submit', id='submit-val', n_clicks=0),
+    html.Div(id='container-button-basic',children='Enter a stock symbol and press submit'),
+    dcc.Store(id='stkName-value')
 ])
-'''
+
 @callback(
     Output('stkName-value', 'data'),
     Output('container-button-basic', 'children'),
@@ -928,12 +928,12 @@ def update_output(n_clicks, value):
         return [str(value).upper(), str(value).upper()]
     else:
         return ['The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol ']
-'''
-@callback(Output('graph', 'figure'),
-          Input('interval', 'n_intervals'),)
-          #State('stkName-value', 'data'))
 
-def update_graph_live(n_intervals): #, data
+@callback(Output('graph', 'figure'),
+          Input('interval', 'n_intervals'),
+          State('stkName-value', 'data'))
+
+def update_graph_live(n_intervals, data):
     print('inFunction')	
     fft = []
     AllTrade = []
@@ -943,11 +943,11 @@ def update_graph_live(n_intervals): #, data
     OptionOrdersCall = []
     OptionOrdersPut = []
     OptionTimeFrame = []
-    #print(data)
-    #if data in symbols:
-    #    stkName = data
-    #else:
-    #    stkName = 'SPY'
+    print(data)
+    if data in symbols:
+        stkName = data
+    else:
+        stkName = 'SPY'
     
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
@@ -1054,7 +1054,7 @@ def update_graph_live(n_intervals): #, data
             newTList.append(mTrade[i])
             
             
-    newTList = newTList[:7]
+    newTList = newTList[:4]
     
     #for i in range(len(newTList)):
         #newTList[i].append(i)
