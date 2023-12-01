@@ -943,11 +943,11 @@ def update_graph_live(n_intervals): #, data
     OptionOrdersCall = []
     OptionOrdersPut = []
     OptionTimeFrame = []
-    print(data)
-    if data in symbols:
-        stkName = data
-    else:
-        stkName = 'SPY'
+    #print(data)
+    #if data in symbols:
+    #    stkName = data
+    #else:
+    #    stkName = 'SPY'
     
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
