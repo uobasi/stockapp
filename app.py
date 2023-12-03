@@ -635,18 +635,9 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                             ),
                   row=1, col=1
                  )
-    '''
-    fig.add_shape(type="rect",
-                      y0=round(sortadlist2[0][0],2)-.3, y1=round(sortadlist2[0][0],2)+.3, x0=-1, x1=len(df),
-                      fillcolor="darkcyan",
-                      opacity=0.15)
-    '''
+
     for v in range(len(sortadlist)):
-        if pea:
-            #res = getBAB(df,sortadlist[v][0],stockName)
-            res = [0,0,0]
-        else: 
-            res = [0,0,0]
+        res = [0,0,0]
         fig.add_trace(go.Scatter(x=df['time'],
                                  y= [sortadlist[v][0]]*len(df['time']) ,
                                  line_color='brown' if (str(sortadlist[v][3]) == 'B(SELL)' or str(sortadlist[v][3]) == 'BB(SELL)') else 'rgb(0,104,139)' if (str(sortadlist[v][3]) == 'A(BUY)' or str(sortadlist[v][3]) == 'AA(BUY)') else 'rgb(0,0,0)',
@@ -666,7 +657,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
     
 
 
-    for tmr in range(0,len(fig.data)): #3
+    for tmr in range(0,len(fig.data)): 
         fig.data[tmr].visible = True
         
     steps = []
