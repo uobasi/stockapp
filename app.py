@@ -891,12 +891,8 @@ def splitHun(stkName, trad, quot, num1, num2, quodict):
 
 
 from dash import Dash, dcc, html, Input, Output, callback, State
-if stkName == 'TSLA':
-    inter = 120000
-    vpVal = 30
-else:
-    inter = 110000
-    vpVal = 40
+inter = 120000
+vpVal = 40
 app = Dash()
 app.layout = html.Div([
     
