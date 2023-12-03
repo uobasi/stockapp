@@ -63,8 +63,8 @@ def killAll():
 
 
 def ema(df):
-    df['30ema'] = df['close'].ewm(span=30, adjust=False).mean()
-    df['40ema'] = df['close'].ewm(span=40, adjust=False).mean()
+    #df['30ema'] = df['close'].ewm(span=30, adjust=False).mean()
+    #df['40ema'] = df['close'].ewm(span=40, adjust=False).mean()
     df['28ema'] = df['close'].ewm(span=28, adjust=False).mean()
     df['50ema'] = df['close'].ewm(span=50, adjust=False).mean()
     df['1ema'] = df['close'].ewm(span=1, adjust=False).mean()
@@ -129,8 +129,8 @@ def PPP(df):
 
 
 
-def VMA(df):
-    df['vma'] = df['volume'].rolling(4).mean()
+#def VMA(df):
+    #df['vma'] = df['volume'].rolling(4).mean()
       
             
 
