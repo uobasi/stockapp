@@ -168,23 +168,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
         putDec = round(NumPut / sum([float(i[1]) for i in optionOrderList]),2)
         CallDec = round(NumCall / sum([float(i[1]) for i in optionOrderList]),2)
         
-    
-    '''
-    NumPutHalf = 0
-    NumCallHalf = 0
-    putDecHalf = 0
-    CallDecHalf = 0
-    if len(optionOrderList) > 0:
-        if datetime.fromtimestamp(int(int(optionOrderList[len(optionOrderList)-1][2]) // 1000000000)).hour >= 12:
-            tindex = bisect.bisect_left([i[5] for i in optionOrderList], '12:30')
-            
-            NumPutHalf = sum([float(i[1]) for i in optionOrderList[tindex:] if 'P' in i[3]])
-            NumCallHalf = sum([float(i[1]) for i in optionOrderList[tindex:] if 'C' in i[3]])
-            if len(optionOrderList) > 0:
-                putDecHalf = round(NumPutHalf / sum([float(i[1]) for i in optionOrderList[tindex-1:]]),2)
-                CallDecHalf = round(NumCallHalf / sum([float(i[1]) for i in optionOrderList[tindex-1:]]),2)
-    '''   
-    
+
     fig = make_subplots(rows=2, cols=3, shared_xaxes=False, shared_yaxes=False,
                         specs=[[{}, {"colspan": 1}, {"colspan": 1},],
                                [{}, {"colspan": 2,}, {}, ]], #'+ '<br>' +' ( Put:'+str(putDecHalf)+'('+str(NumPutHalf)+') | '+'Call:'+str(CallDecHalf)+'('+str(NumCallHalf)+') '
@@ -1091,64 +1075,37 @@ def update_graph_live(n_intervals, data):
         elif t.bid_price < i[0] < t.ask_price:
             i+= ['BBA', opttimeStamp]
             
-    newwT =[]
-    for i in newTList:
-        newwT.append([i[0],i[1],i[2],i[5], i[4],i[3],i[6]])
-        
-    #print(newwT)
-
-    try:
-        gclient = storage.Client(project="stockapp-401615")
-        bucket = gclient.get_bucket("stockapp-storage")
-        blob = Blob('dailyCandle'+stkName, bucket) 
-        fft = json.loads(blob.download_as_text())
+    newwT =[[i[0],i[1],i[2],i[5], i[4],i[3],i[6]] for i in newTList]
+    #for i in newTList:
+        #newwT.append([i[0],i[1],i[2],i[5], i[4],i[3],i[6]])
         
 
-        gclient = storage.Client(project="stockapp-401615")
-        bucket = gclient.get_bucket("stockapp-storage")
-        blob = Blob('OptionTrackerPut'+stkName, bucket) 
-        OptionOrdersPut = json.loads(blob.download_as_text())
-                
-        
-        gclient = storage.Client(project="stockapp-401615")
-        bucket = gclient.get_bucket("stockapp-storage")
-        blob = Blob('OptionTrackerCall'+stkName, bucket) 
-        OptionOrdersCall = json.loads(blob.download_as_text())
-                
-        OptionOrders = OptionOrdersPut + OptionOrdersCall
-        OptionOrders.sort(key=lambda x:int(x[2])) 
+    gclient = storage.Client(project="stockapp-401615")
+    bucket = gclient.get_bucket("stockapp-storage")
+    blob = Blob('dailyCandle'+stkName, bucket) 
+    fft = json.loads(blob.download_as_text())
+    
+
+    gclient = storage.Client(project="stockapp-401615")
+    bucket = gclient.get_bucket("stockapp-storage")
+    blob = Blob('OptionTrackerPut'+stkName, bucket) 
+    OptionOrdersPut = json.loads(blob.download_as_text())
             
-
-        gclient = storage.Client(project="stockapp-401615")
-        bucket = gclient.get_bucket("stockapp-storage")
-        blob = Blob('OptionTimeFrame'+stkName, bucket) 
-        OptionTimeFrame = json.loads(blob.download_as_text())
-    except(RetryError, DefaultCredentialsError):
-        gclient = storage.Client(project="stockapp-401615")
-        bucket = gclient.get_bucket("stockapp-storage")
-        blob = Blob('dailyCandle'+stkName, bucket) 
-        fft = json.loads(blob.download_as_text())
-        
-
-        gclient = storage.Client(project="stockapp-401615")
-        bucket = gclient.get_bucket("stockapp-storage")
-        blob = Blob('OptionTrackerPut'+stkName, bucket) 
-        OptionOrdersPut = json.loads(blob.download_as_text())
-                
-        
-        gclient = storage.Client(project="stockapp-401615")
-        bucket = gclient.get_bucket("stockapp-storage")
-        blob = Blob('OptionTrackerCall'+stkName, bucket) 
-        OptionOrdersCall = json.loads(blob.download_as_text())
-                
-        OptionOrders = OptionOrdersPut + OptionOrdersCall
-        OptionOrders.sort(key=lambda x:int(x[2])) 
+    
+    gclient = storage.Client(project="stockapp-401615")
+    bucket = gclient.get_bucket("stockapp-storage")
+    blob = Blob('OptionTrackerCall'+stkName, bucket) 
+    OptionOrdersCall = json.loads(blob.download_as_text())
             
+    OptionOrders = OptionOrdersPut + OptionOrdersCall
+    OptionOrders.sort(key=lambda x:int(x[2])) 
+        
 
-        gclient = storage.Client(project="stockapp-401615")
-        bucket = gclient.get_bucket("stockapp-storage")
-        blob = Blob('OptionTimeFrame'+stkName, bucket) 
-        OptionTimeFrame = json.loads(blob.download_as_text())
+    gclient = storage.Client(project="stockapp-401615")
+    bucket = gclient.get_bucket("stockapp-storage")
+    blob = Blob('OptionTimeFrame'+stkName, bucket) 
+    OptionTimeFrame = json.loads(blob.download_as_text())
+
 
     
     fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[]) #trends=FindTrends(df,n=10)
