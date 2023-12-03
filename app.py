@@ -22,8 +22,6 @@ from polygon import RESTClient, exceptions
 client = RESTClient("udC9OULShUppFf4EF9UvLMLgHYW7wyCG")
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
-import csv
-import bisect 
 import subprocess
 import sys
 import atexit
