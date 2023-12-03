@@ -37,7 +37,7 @@ from google.auth.exceptions import DefaultCredentialsError
 global allProcess 
 allProcess = []
 global symbols
-symbols = ['SPY','QQQ','IWM']
+symbols = ['SPY','QQQ','IWM','NVDA','TSLA']
 for s in symbols:
     if s == 'IWM':
         priceThreshold = '5000'
@@ -907,12 +907,12 @@ app.layout = html.Div([
         n_intervals=0,
       ),
 
-    #html.Div(dcc.Input(id='input-on-submit', type='text')),
-    #html.Button('Submit', id='submit-val', n_clicks=0),
-    #html.Div(id='container-button-basic',children='Enter a stock symbol and press submit'),
-    #dcc.Store(id='stkName-value')
+    html.Div(dcc.Input(id='input-on-submit', type='text')),
+    html.Button('Submit', id='submit-val', n_clicks=0),
+    html.Div(id='container-button-basic',children='Enter a stock symbol and press submit'),
+    dcc.Store(id='stkName-value')
 ])
-'''
+
 @callback(
     Output('stkName-value', 'data'),
     Output('container-button-basic', 'children'),
@@ -925,15 +925,15 @@ def update_output(n_clicks, value):
     value = str(value).upper() 
     if value in symbols:
         print('The input symbol was "{}" '.format(value))
-        return [str(value).upper(), str(value).upper()]
+        return str(value).upper(), str(value).upper()
     else:
-        return ['The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol ']
-'''
-@callback(Output('graph', 'figure'),
-          Input('interval', 'n_intervals'),)
-          #State('stkName-value', 'data'))
+        return 'The input symbol was '+str(value)+' is not accepted please try different symbol ', 'The input symbol was '+str(value)+' is not accepted please try different symbol '
 
-def update_graph_live(n_intervals): #, data
+@callback(Output('graph', 'figure'),
+          Input('interval', 'n_intervals'),
+          State('stkName-value', 'data'))
+
+def update_graph_live(n_intervals, data):
     print('inFunction')	
     fft = []
     AllTrade = []
@@ -943,11 +943,12 @@ def update_graph_live(n_intervals): #, data
     OptionOrdersCall = []
     OptionOrdersPut = []
     OptionTimeFrame = []
-    #print(data)
-    #if data in symbols:
-    #    stkName = data
-    #else:
-    #    stkName = 'SPY'
+    #stkName = 'IWM'
+    print(data)
+    if data in symbols:
+        stkName = data
+    else:
+        stkName = 'SPY'
     
     if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
         lastFriday = date.today()
