@@ -18,10 +18,12 @@ from plotly.subplots import make_subplots
 np.seterr(divide='ignore', invalid='ignore')
 pd.options.mode.chained_assignment = None
 from scipy.signal import argrelextrema
-from polygon import RESTClient, 
+from polygon import RESTClient, exceptions
 client = RESTClient("udC9OULShUppFf4EF9UvLMLgHYW7wyCG")
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
+import csv
+import bisect 
 import subprocess
 import sys
 import atexit
@@ -29,6 +31,8 @@ import json
 import calendar
 from google.cloud.storage import Blob
 from google.cloud import storage
+from google.api_core.exceptions import RetryError
+from google.auth.exceptions import DefaultCredentialsError
 
 global allProcess 
 allProcess = []
@@ -952,18 +956,30 @@ def update_graph_live(n_intervals, data):
     #month = '10'
     agMins = 2
 
-    aggs = []    
-    for vv in client.get_aggs(stkName, agMins, 'minute', year+'-'+month+'-'+day, year+'-'+month+'-'+day):
-        hourss = datetime.fromtimestamp(int(vv.timestamp/1000)).hour
-        if hourss < 10:
-            hourss = '0'+str(hourss)
-        minss = datetime.fromtimestamp(int(vv.timestamp/1000)).minute
-        if minss < 10:
-            minss = '0'+str(minss)
-        opttimeStamp = str(hourss) + ':' + str(minss) + ':00'
-        if int(hourss) < 16:
-            aggs.append([vv.open, vv.high, vv.low, vv.close, vv.volume, opttimeStamp, vv.timestamp, stkName,])
-
+    try:
+        aggs = []    
+        for vv in client.get_aggs(stkName, agMins, 'minute', year+'-'+month+'-'+day, year+'-'+month+'-'+day):
+            hourss = datetime.fromtimestamp(int(vv.timestamp/1000)).hour
+            if hourss < 10:
+                hourss = '0'+str(hourss)
+            minss = datetime.fromtimestamp(int(vv.timestamp/1000)).minute
+            if minss < 10:
+                minss = '0'+str(minss)
+            opttimeStamp = str(hourss) + ':' + str(minss) + ':00'
+            if int(hourss) < 16:
+                aggs.append([vv.open, vv.high, vv.low, vv.close, vv.volume, opttimeStamp, vv.timestamp, stkName,])
+    except(exceptions.BadResponse):
+        aggs = []    
+        for vv in client.get_aggs(stkName, agMins, 'minute', year+'-'+month+'-'+day, year+'-'+month+'-'+day):
+            hourss = datetime.fromtimestamp(int(vv.timestamp/1000)).hour
+            if hourss < 10:
+                hourss = '0'+str(hourss)
+            minss = datetime.fromtimestamp(int(vv.timestamp/1000)).minute
+            if minss < 10:
+                minss = '0'+str(minss)
+            opttimeStamp = str(hourss) + ':' + str(minss) + ':00'
+            if int(hourss) < 16:
+                aggs.append([vv.open, vv.high, vv.low, vv.close, vv.volume, opttimeStamp, vv.timestamp, stkName,])
         
 
     df = pd.DataFrame(aggs, columns = ['open', 'high', 'low', 'close', 'volume', 'time', 'timestamp', 'name',])
@@ -1028,10 +1044,12 @@ def update_graph_live(n_intervals, data):
             secs = '0'+str(secs)
         opttimeStamp = str(hourss) + ':' + str(minss) + ':'+ str(secs)
 
-                                
-        for t in client.list_quotes(stkName, timestamp_lte = i[2]):        
-            break 
-        
+        try:                        
+            for t in client.list_quotes(stkName, timestamp_lte = i[2]):        
+                break 
+        except(exceptions.BadResponse):
+            for t in client.list_quotes(stkName, timestamp_lte = i[2]):        
+                break 
         
         if i[0] == t.ask_price:
             #i.append('A (buyer agreed to buy the asset at the price)')
