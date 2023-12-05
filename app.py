@@ -250,7 +250,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
         mcount = 0 
         for p in localMin:
             fig.add_annotation(x=df['time'][p], y=df['close'][p],
-                               text='<b>' + str(mcount) +'lMin' +  '</b>',
+                               text= str(mcount) +'lMin' ,
                                showarrow=True,
                                arrowhead=4,
                                font=dict(
@@ -263,7 +263,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
         mcount = 0 
         for b in localMax:
             fig.add_annotation(x=df['time'][b], y=df['close'][b],
-                               text='<b>' + str(mcount) + 'lMax' +  '</b>',
+                               text=str(mcount) + 'lMax',
                                showarrow=True,
                                arrowhead=4,
                                font=dict(
