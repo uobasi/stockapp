@@ -271,7 +271,7 @@ def DailyCandle(stkName=str(sys.argv[1])):
                         bucket = gclient.get_bucket("stockapp-storage")
                         blob = Blob('dailyCandle'+stkName, bucket) 
                         blob.upload_from_string(json.dumps(newFFT[::-1]))
-        except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError, DefaultCredentialsError, TooManyRequests, RetryError, ZeroDivisionError, IndexError, requests.exceptions.ReadTimeout):
+        except(exceptions.BadResponse, exceptions.NoResultsError, urllib3.exceptions.MaxRetryError, DefaultCredentialsError, TooManyRequests, RetryError, ZeroDivisionError, IndexError, requests.exceptions.ReadTimeout):
             continue
             
 

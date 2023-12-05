@@ -109,7 +109,7 @@ def getAllTrades(stkName=str(sys.argv[1])):
             blob.upload_from_string(json.dumps(final))
                 
             
-        except(exceptions.BadResponse, requests.exceptions.ReadTimeout, DefaultCredentialsError, requests.exceptions.ConnectionError, TooManyRequests, urllib3.exceptions.MaxRetryError, RetryError):
+        except(exceptions.BadResponse, exceptions.NoResultsError, requests.exceptions.ReadTimeout, DefaultCredentialsError, requests.exceptions.ConnectionError, TooManyRequests, urllib3.exceptions.MaxRetryError, RetryError):
             continue
 
 if __name__ == '__main__':

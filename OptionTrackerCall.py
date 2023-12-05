@@ -97,7 +97,7 @@ def CallOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
             closePrice = int(df['close'][df.index[-1]])
 
             callPriceList = [closePrice-i for i in range(0,40)]  +  [closePrice+i for i in range(1,40)]
-            
+
             if stkName not in ['SPY', 'QQQ', 'IWM']:
                 callPriceList +=  [closePrice+(i+2.5) for i in range(0,40)]  +  [closePrice-(i-2.5) for i in range(1,40)]
                 
@@ -205,7 +205,7 @@ def CallOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
             blob.upload_from_string(json.dumps(total))
                 
             #time.sleep(5)
-        except(exceptions.BadResponse, urllib3.exceptions.MaxRetryError, DefaultCredentialsError, RetryError, TooManyRequests, urllib3.exceptions.ReadTimeoutError, requests.exceptions.ReadTimeout):
+        except(exceptions.BadResponse, exceptions.NoResultsError, urllib3.exceptions.MaxRetryError, DefaultCredentialsError, RetryError, TooManyRequests, urllib3.exceptions.ReadTimeoutError, requests.exceptions.ReadTimeout):
             continue
 
 

@@ -205,7 +205,7 @@ def PutOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
                 
             #time.sleep(5)
                 
-        except(exceptions.BadResponse, DefaultCredentialsError, urllib3.exceptions.MaxRetryError, RetryError, TooManyRequests, urllib3.exceptions.ReadTimeoutError, requests.exceptions.ReadTimeout):
+        except(exceptions.BadResponse, exceptions.NoResultsError, DefaultCredentialsError, urllib3.exceptions.MaxRetryError, RetryError, TooManyRequests, urllib3.exceptions.ReadTimeoutError, requests.exceptions.ReadTimeout):
             continue
         
         
