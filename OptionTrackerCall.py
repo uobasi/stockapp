@@ -58,6 +58,54 @@ def CallOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
         else:
             day = str(day)
 
+    if stkName == 'IWM':
+        if datetime(date.today().year, date.today().month, date.today().day).weekday() == 1:
+            next_day_date = datetime(date.today().year, date.today().month, date.today().day) + timedelta(days=1)
+
+            year = str(next_day_date.year)
+            month = next_day_date.month
+            if month < 10:
+                month = '0'+str(month)
+            else:
+                month = str(month)
+            day = next_day_date.day
+            if day < 10:
+                day = '0'+str(day)
+            else:
+                day = str(day)
+        
+        if datetime(date.today().year, date.today().month, date.today().day).weekday() == 3:
+            next_day_date = datetime(date.today().year, date.today().month, date.today().day) + timedelta(days=1)
+
+            year = str(next_day_date.year)
+            month = next_day_date.month
+            if month < 10:
+                month = '0'+str(month)
+            else:
+                month = str(month)
+            day = next_day_date.day
+            if day < 10:
+                day = '0'+str(day)
+            else:
+                day = str(day)
+
+    if stkName not in ['SPY', 'QQQ', 'IWM'] and datetime(date.today().year, date.today().month, date.today().day).weekday() != 4:
+        current_date = datetime.now()
+        days_until_friday = (4 - current_date.weekday() + 7) % 7
+        upcoming_friday = current_date + timedelta(days=days_until_friday)
+
+        year = str(upcoming_friday.year)
+        month = upcoming_friday.month
+        if month < 10:
+            month = '0'+str(month)
+        else:
+            month = str(month)
+        day = upcoming_friday.day
+        if day < 10:
+            day = '0'+str(day)
+        else:
+            day = str(day)
+
 
 
     '''
