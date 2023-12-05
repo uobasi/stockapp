@@ -28,41 +28,7 @@ import sys
 
 
 def PutOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
-    if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
-        lastFriday = date.today()
-        oneday = timedelta(days=1)
-
-        while lastFriday.weekday() != calendar.FRIDAY:
-            lastFriday -= oneday
-        
-        year = str(lastFriday.year)
-        month = lastFriday.month
-        if month < 10:
-            month = '0'+str(month)
-        else:
-            month = str(month)
-        day = lastFriday.day
-        if day < 10:
-            day = '0'+str(day)
-        else:
-            day = str(day)
-    else:
-        year = str(date.today().year)
-        month = date.today().month
-        if month < 10:
-            month = '0'+str(month)
-        else:
-            month = str(month)
-        day = date.today().day
-        if day < 10:
-            day = '0'+str(day)
-        else:
-            day = str(day)
-
-
     
-
-
 
     '''
     day = '10'
@@ -82,6 +48,37 @@ def PutOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
     while True: 
         try:
             aggs = [] 
+            if date(date.today().year, date.today().month, date.today().day).weekday() >= 5:
+                lastFriday = date.today()
+                oneday = timedelta(days=1)
+
+                while lastFriday.weekday() != calendar.FRIDAY:
+                    lastFriday -= oneday
+                
+                year = str(lastFriday.year)
+                month = lastFriday.month
+                if month < 10:
+                    month = '0'+str(month)
+                else:
+                    month = str(month)
+                day = lastFriday.day
+                if day < 10:
+                    day = '0'+str(day)
+                else:
+                    day = str(day)
+            else:
+                year = str(date.today().year)
+                month = date.today().month
+                if month < 10:
+                    month = '0'+str(month)
+                else:
+                    month = str(month)
+                day = date.today().day
+                if day < 10:
+                    day = '0'+str(day)
+                else:
+                    day = str(day)
+
             for vv in client.get_aggs(stkName, agMins, 'minute', year+'-'+month+'-'+day, year+'-'+month+'-'+day):
                 hourss = datetime.fromtimestamp(int(vv.timestamp/1000)).hour
                 if hourss < 10:
