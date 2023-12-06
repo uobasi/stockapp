@@ -78,6 +78,8 @@ def CallOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
                 else:
                     day = str(day)
 
+            day = '05'
+
             for vv in client.get_aggs(stkName, agMins, 'minute', year+'-'+month+'-'+day, year+'-'+month+'-'+day):
                 hourss = datetime.fromtimestamp(int(vv.timestamp/1000)).hour
                 if hourss < 10:
@@ -148,6 +150,8 @@ def CallOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
                     day = '0'+str(day)
                 else:
                     day = str(day)
+
+            day = '05'
             
             for x in callPriceList:
                 if isinstance(x, int):
