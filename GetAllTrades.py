@@ -97,13 +97,8 @@ def getAllTrades(stkName=str(sys.argv[1])):
             
             bTime = df['timestamp'][df[df['time']==df['time'].iloc[0]].index.values[0]]
             AllTrade = list(client.list_trades(stkName, timestamp_gte=int((str(bTime)  + '000000')), timestamp_lte=int((str(df['timestamp'].iloc[-1]+(60000*agMins)) + '000000')), order='asc', limit=50000))
-            final = [[i.price,i.size,i.participant_timestamp, i.exchange] for i in AllTrade]
-            final = sorted(final, key=lambda d: d[2], reverse=False) 
-            '''
-            with open('GetAllTrades'+stkName+'.csv', "w", newline='',encoding="utf-8") as f:
-                writer = csv.writer(f)
-                writer.writerows(final)
-            '''    
+            final = sorted([[i.price,i.size,i.participant_timestamp, i.exchange] for i in AllTrade], key=lambda d: d[2], reverse=False) 
+
             gclient = storage.Client(project="stockapp-401615")
             bucket = gclient.get_bucket("stockapp-storage")
             blob = Blob('GetAllTrades'+stkName, bucket) 
