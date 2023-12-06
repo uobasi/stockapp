@@ -40,7 +40,7 @@ for s in symbols:
     if s == 'IWM':
         priceThreshold = '5000'
     else:
-        priceThreshold = '10000'
+        priceThreshold = '1000'
     dailyCandle = subprocess.Popen([sys.executable,'dailyCandle.py', s])
     OptionsTrack = subprocess.Popen([sys.executable,'OptionsTrack.py', s, priceThreshold])
     OptionTrackerCall = subprocess.Popen([sys.executable,'OptionTrackerCall.py', s, priceThreshold])
@@ -950,7 +950,7 @@ def update_graph_live(n_intervals, data):
         else:
             day = str(day)
 
-    #day = '27'
+    day = '05'
     #month = '10'
     agMins = 2
 
