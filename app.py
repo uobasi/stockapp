@@ -864,7 +864,7 @@ def splitHun(stkName, trad, quot, num1, num2, quodict):
 
 
 from dash import Dash, dcc, html, Input, Output, callback, State
-inter = 80000
+inter = 90000
 vpVal = 40
 app = Dash()
 app.layout = html.Div([
