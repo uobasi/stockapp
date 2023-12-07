@@ -1024,7 +1024,7 @@ def update_graph_live(n_intervals, data):
             newTList.append(mTrade[i])
             
             
-    newTList = newTList[:4]
+    newTList = newTList[:6]
     
     #for i in range(len(newTList)):
         #newTList[i].append(i)
