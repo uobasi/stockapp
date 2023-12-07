@@ -864,7 +864,7 @@ def splitHun(stkName, trad, quot, num1, num2, quodict):
 
 
 from dash import Dash, dcc, html, Input, Output, callback, State
-inter = 90000
+inter = 80000
 vpVal = 40
 app = Dash()
 app.layout = html.Div([
@@ -1024,7 +1024,7 @@ def update_graph_live(n_intervals, data):
             newTList.append(mTrade[i])
             
             
-    newTList = newTList[:5]
+    newTList = newTList[:4]
     
     #for i in range(len(newTList)):
         #newTList[i].append(i)
