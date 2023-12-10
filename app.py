@@ -310,10 +310,10 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                 # color="#ffffff"
             ),row=2, col=2)
     '''
-    fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([i[0] for i in mlst]), mode='markers',name='Price'), row=2, col=2)
+    fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([i[0] for i in mlst]), mode='markers',name='TradedPrice'), row=2, col=2)
     for ps in mlst:
         ps.append(df['time'].searchsorted(ps[6]))
-    fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([df['1ema'][i[7]] for i in mlst]), mode='lines',name='Price'), row=2, col=2)
+    fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([df['close'][i[7]] for i in mlst]), mode='lines',name='ClosingPrice'), row=2, col=2)
     
     
     if pea:
@@ -1017,16 +1017,16 @@ def update_graph_live(n_intervals, data):
     # derivative of y with respect to x
     df_dx = derivative(f, x_fake, dx=1e-6)
     
-    mTrade = [i for i in AllTrade if i[1] >= 10000]
+    mTrade = [i for i in AllTrade if i[1] >= 5000]
     
     mTrade = sorted(mTrade, key=lambda d: d[1], reverse=True) 
     
     checkDup = []
-    newTList =[ ]
+    newTList1 =[ ]
     for i in range(len(mTrade)):
         if mTrade[i][0] not in checkDup:
             checkDup.append(mTrade[i][0])
-            newTList.append(mTrade[i])
+            newTList1.append(mTrade[i])
             
             
     #newTList = newTList[:4]
