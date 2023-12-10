@@ -133,7 +133,7 @@ def PPP(df):
             
 
 
-def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName='', prevdtstr:str='', sord:list=[], trends:list=[], lstVwap:list=[], bigOrders:list=[], pea:bool=False, timeStamp:int=None, previousDay:bool=False, OptionTimeFrame:list=[], overall:list=[]):
+def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName='', prevdtstr:str='', sord:list=[], trends:list=[], lstVwap:list=[], bigOrders:list=[], pea:bool=False, timeStamp:int=None, previousDay:bool=False, OptionTimeFrame:list=[], overall:list=[], mlst:list=[]):
   
     average = round(np.average(df_dx), 3)
     now = round(df_dx[len(df_dx)-1], 3)
@@ -279,7 +279,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
 
     
     
-    '''
+    
     fig.add_trace(go.Scatter(x=df['time'], y=df_dx, mode='lines',name='Derivative'), row=2, col=2)
     fig.add_hline(y=0, row=2, col=2, line_color='black')
         
@@ -309,7 +309,9 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                 size=10,
                 # color="#ffffff"
             ),row=2, col=2)
-
+    '''
+    fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([i[0] for i in mlst]), mode='markers',name='Price'), row=2, col=2)
+    
     
     if pea:
         peak, _ = signal.find_peaks(df['50ema'])
@@ -1024,7 +1026,8 @@ def update_graph_live(n_intervals, data):
             newTList.append(mTrade[i])
             
             
-    newTList = newTList[:4]
+    #newTList = newTList[:4]
+    newTList = mTrade
     
     #for i in range(len(newTList)):
         #newTList[i].append(i)
@@ -1065,6 +1068,7 @@ def update_graph_live(n_intervals, data):
             i+= ['BBA', opttimeStamp]
             
     newwT =[[i[0],i[1],i[2],i[5], i[4],i[3],i[6]] for i in newTList]
+    mlst = sorted(newwT, key=lambda d: d[6], reverse=False) 
     #for i in newTList:
         #newwT.append([i[0],i[1],i[2],i[5], i[4],i[3],i[6]])
         
@@ -1097,7 +1101,7 @@ def update_graph_live(n_intervals, data):
 
 
     
-    fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[]) #trends=FindTrends(df,n=10)
+    fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[], mlst=mlst) #trends=FindTrends(df,n=10)
     #fg.show(config={'modeBarButtonsToAdd': ['drawline']})
 
     return fg
