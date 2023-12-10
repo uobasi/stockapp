@@ -311,6 +311,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
             ),row=2, col=2)
     '''
     fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([i[0] for i in mlst]), mode='markers',name='Price'), row=2, col=2)
+    fig.add_trace(go.Scatter(x=df['time'], y=df['1ema'], mode='lines',name='Price'), row=2, col=2)
     
     
     if pea:
@@ -1101,7 +1102,7 @@ def update_graph_live(n_intervals, data):
 
 
     
-    fg = plotChart(df, [hs[1],newwT], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[], mlst=mlst) #trends=FindTrends(df,n=10)
+    fg = plotChart(df, [hs[1],newwT[:4]], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[], mlst=mlst) #trends=FindTrends(df,n=10)
     #fg.show(config={'modeBarButtonsToAdd': ['drawline']})
 
     return fg
