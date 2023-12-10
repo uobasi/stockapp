@@ -195,7 +195,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
             hovertext=pd.Series([i[0]+' '+i[1] for i in OptionTimeFrame]),
             
         ),
-        row=2, col=1
+        row=2, col=2
     )
         
     fig.add_trace(
@@ -212,7 +212,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
             hovertext=pd.Series([i[0]+' '+i[1] for i in OptionTimeFrame]),
             
         ),
-        row=2, col=1
+        row=2, col=2
     )
 
     pms = pd.Series([i[2] for i in OptionTimeFrame]).rolling(4).mean()
@@ -310,10 +310,12 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
                 # color="#ffffff"
             ),row=2, col=2)
     '''
-    fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([i[0] for i in mlst]), mode='markers',name='TradedPrice'), row=2, col=2)
+    fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([i[0] for i in mlst]), mode='markers',name='TradedPrice'), row=2, col=1)
     for ps in mlst:
         ps.append(df['time'].searchsorted(ps[6]))
-    fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([df['close'][i[7]] for i in mlst]), mode='lines',name='ClosingPrice'), row=2, col=2)
+    fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([df['close'][i[7]] for i in mlst]), mode='lines',name='ClosingPrice'), row=2, col=1)
+    
+    fig.add_trace(go.Scatter(x=pd.Series([i[6] for i in mlst]), y=pd.Series([i[0] for i in mlst]), mode='markers',name='TradedPrice'), row=1, col=1)
     
     
     if pea:
