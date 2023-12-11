@@ -958,7 +958,7 @@ def update_graph_live(n_intervals, data):
         else:
             day = str(day)
 
-    #day = '05'
+    day = '08'
     #month = '10'
     agMins = 2
 
@@ -1024,13 +1024,14 @@ def update_graph_live(n_intervals, data):
     
     mTrade = sorted(mTrade, key=lambda d: d[1], reverse=True) 
     
+    '''
     checkDup = []
     newTList1 =[ ]
     for i in range(len(mTrade)):
         if mTrade[i][0] not in checkDup:
             checkDup.append(mTrade[i][0])
             newTList1.append(mTrade[i])
-            
+    '''       
             
     #newTList = newTList[:4]
     newTList = mTrade
@@ -1077,6 +1078,15 @@ def update_graph_live(n_intervals, data):
     mlst = sorted(newwT, key=lambda d: d[6], reverse=False) 
     #for i in newTList:
         #newwT.append([i[0],i[1],i[2],i[5], i[4],i[3],i[6]])
+    
+    checkDup = []
+    newTList1 =[ ]
+    for i in range(len(newwT)):
+        if mTrade[i][0] not in checkDup:
+            checkDup.append(mTrade[i][0])
+            newTList1.append(mTrade[i])
+
+            
         
 
     gclient = storage.Client(project="stockapp-401615")
@@ -1107,7 +1117,7 @@ def update_graph_live(n_intervals, data):
 
 
     
-    fg = plotChart(df, [hs[1],newwT[:4]], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[], mlst=mlst) #trends=FindTrends(df,n=10)
+    fg = plotChart(df, [hs[1],newTList1[:4]], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[], mlst=mlst) #trends=FindTrends(df,n=10)
     #fg.show(config={'modeBarButtonsToAdd': ['drawline']})
 
     return fg
