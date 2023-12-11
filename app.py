@@ -1024,14 +1024,8 @@ def update_graph_live(n_intervals, data):
     
     mTrade = sorted(mTrade, key=lambda d: d[1], reverse=True) 
     
-    '''
-    checkDup = []
-    newTList1 =[ ]
-    for i in range(len(mTrade)):
-        if mTrade[i][0] not in checkDup:
-            checkDup.append(mTrade[i][0])
-            newTList1.append(mTrade[i])
-    '''       
+    
+            
             
     #newTList = newTList[:4]
     newTList = mTrade
@@ -1073,20 +1067,19 @@ def update_graph_live(n_intervals, data):
             i+= ['BB(SELL)', opttimeStamp]
         elif t.bid_price < i[0] < t.ask_price:
             i+= ['BBA', opttimeStamp]
-            
-    newwT =[[i[0],i[1],i[2],i[5], i[4],i[3],i[6]] for i in newTList]
-    mlst = sorted(newwT, key=lambda d: d[6], reverse=False) 
-    #for i in newTList:
-        #newwT.append([i[0],i[1],i[2],i[5], i[4],i[3],i[6]])
-    
+
     checkDup = []
     newTList1 =[ ]
-    for i in range(len(newwT)):
+    for i in range(len(newTList)):
         if mTrade[i][0] not in checkDup:
             checkDup.append(mTrade[i][0])
             newTList1.append(mTrade[i])
-
             
+    newwT =[[i[0],i[1],i[2],i[5], i[4],i[3],i[6]] for i in newTList1]
+    mlst = sorted([[i[0],i[1],i[2],i[5], i[4],i[3],i[6]] for i in newTList], key=lambda d: d[6], reverse=False) 
+    #for i in newTList:
+        #newwT.append([i[0],i[1],i[2],i[5], i[4],i[3],i[6]])
+    
         
 
     gclient = storage.Client(project="stockapp-401615")
@@ -1117,7 +1110,7 @@ def update_graph_live(n_intervals, data):
 
 
     
-    fg = plotChart(df, [hs[1],newTList1[:4]], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[], mlst=mlst) #trends=FindTrends(df,n=10)
+    fg = plotChart(df, [hs[1],newwT[:5]], va[0], va[1], x_fake, df_dx, bigOrders=[], optionOrderList=OptionOrders, stockName=stkName,previousDay=False, prevdtstr='', pea=False, sord = fft, OptionTimeFrame = OptionTimeFrame, overall=[], mlst=mlst) #trends=FindTrends(df,n=10)
     #fg.show(config={'modeBarButtonsToAdd': ['drawline']})
 
     return fg
