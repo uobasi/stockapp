@@ -1070,12 +1070,9 @@ def update_graph_live(n_intervals, data):
 
     checkDup = []
     newTList1 =[ ]
-    ctn = 0
     for i in range(len(newTList)):
         if newTList[i][0] not in checkDup:
             checkDup.append(newTList[i][0])
-            i[4] = ctn
-            ctn+=1
             newTList1.append(newTList[i])
             
     newwT =[[i[0],i[1],i[2],i[5], i[4],i[3],i[6]] for i in newTList1]
