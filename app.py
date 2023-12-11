@@ -971,8 +971,8 @@ def update_graph_live(n_intervals, data):
             if minss < 10:
                 minss = '0'+str(minss)
             opttimeStamp = str(hourss) + ':' + str(minss) + ':00'
-            #if int(hourss) < 16:
-            aggs.append([vv.open, vv.high, vv.low, vv.close, vv.volume, opttimeStamp, vv.timestamp, stkName,])
+            if int(hourss) < 16:
+                aggs.append([vv.open, vv.high, vv.low, vv.close, vv.volume, opttimeStamp, vv.timestamp, stkName,])
     except(exceptions.BadResponse):
         aggs = []    
         for vv in client.get_aggs(stkName, agMins, 'minute', year+'-'+month+'-'+day, year+'-'+month+'-'+day):
@@ -983,8 +983,8 @@ def update_graph_live(n_intervals, data):
             if minss < 10:
                 minss = '0'+str(minss)
             opttimeStamp = str(hourss) + ':' + str(minss) + ':00'
-            #if int(hourss) < 16:
-            aggs.append([vv.open, vv.high, vv.low, vv.close, vv.volume, opttimeStamp, vv.timestamp, stkName,])
+            if int(hourss) < 16:
+                aggs.append([vv.open, vv.high, vv.low, vv.close, vv.volume, opttimeStamp, vv.timestamp, stkName,])
         
 
     df = pd.DataFrame(aggs, columns = ['open', 'high', 'low', 'close', 'volume', 'time', 'timestamp', 'name',])

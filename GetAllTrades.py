@@ -88,8 +88,8 @@ def getAllTrades(stkName=str(sys.argv[1])):
                 if minss < 10:
                     minss = '0'+str(minss)
                 opttimeStamp = str(hourss) + ':' + str(minss) + ':00'
-                #if int(hourss) < 16:
-                aggs.append([vv.open, vv.high, vv.low, vv.close, vv.volume, opttimeStamp, vv.timestamp, stkName,])
+                if int(hourss) < 16:
+                    aggs.append([vv.open, vv.high, vv.low, vv.close, vv.volume, opttimeStamp, vv.timestamp, stkName,])
                 
             
             df = pd.DataFrame(aggs, columns = ['open', 'high', 'low', 'close', 'volume', 'time', 'timestamp', 'name',]) 
