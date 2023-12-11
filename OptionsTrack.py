@@ -79,7 +79,7 @@ def PutOptionTrack(stkName=str(sys.argv[1]), priceThreshold=int(sys.argv[2])):
                 else:
                     day = str(day)
             
-            day = '08'
+            #day = '08'
             for vv in client.get_aggs(stkName, agMins, 'minute', year+'-'+month+'-'+day, year+'-'+month+'-'+day):
                 hourss = datetime.fromtimestamp(int(vv.timestamp/1000)).hour
                 if hourss < 10:
