@@ -1020,7 +1020,7 @@ def update_graph_live(n_intervals, data):
     # derivative of y with respect to x
     df_dx = derivative(f, x_fake, dx=1e-6)
     
-    mTrade = [i for i in AllTrade if i[1] >= 6000]
+    mTrade = [i for i in AllTrade if i[1] >= 5000]
     
     mTrade = sorted(mTrade, key=lambda d: d[1], reverse=True) 
     
