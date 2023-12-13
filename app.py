@@ -388,7 +388,7 @@ def plotChart(df, lst2, num1, num2, x_fake, df_dx, optionOrderList, stockName=''
             text=np.around(pd.Series([i[0] for i in sortadlist2]), 2),
             textposition='auto',
             orientation='h',
-            width=0.2,
+            #width=0.2,
             marker_color=colors,
             hovertext=pd.Series([str(i[6][0]) + ' ' + str(i[6][1]) + ' ' + str(i[6][2]) +' '+ str(i[6][3]) + ' ' + str(i[6][4]) +' '+ str(round(i[6][i[6].index(max(i[6]))]/sum(i[6]),2)) for i in sortadlist2]),
         ),
